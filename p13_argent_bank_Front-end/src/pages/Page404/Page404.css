@@ -1,0 +1,34 @@
+.container-error404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.title-error404 {
+  font-weight: 700;
+  font-size: 18rem;
+  color: #005935;
+}
+
+.description-error404 {
+  font-weight: 500;
+  font-size: 2.25rem;
+  color: #00bc78;
+  font-style: normal;
+}
+
+.link-home {
+  display: flex;
+  align-items: flex-end;
+  height: 6.25rem;
+  font-size: 1.12rem;
+  color: #005935;
+  font-weight: 500;
+}
+
+.link-home:hover {
+  color: #00bc78;
+}
