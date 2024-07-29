@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Page404 from "./pages/Page404/Page404";
+import Login from "./pages/Login/Login";
+import Signin from "./pages/SignIn/SignIn";
 
 /**
  * App is a React component that represents the main application router.
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Page404 />} />
           <Route path="/error" element={<Page404 />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
         </Routes>
       </BrowserRouter>
     </>

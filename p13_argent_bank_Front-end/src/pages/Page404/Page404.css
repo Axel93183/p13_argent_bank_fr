@@ -2,15 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  height: 100%;
   justify-content: center;
+  width: 100%;
+  height: 100vh;
+  gap: 50px;
+  margin: 0;
 }
 
 .title-error404 {
   font-weight: 700;
   font-size: 18rem;
   color: #005935;
+  margin: 0;
 }
 
 .description-error404 {
@@ -18,12 +21,12 @@
   font-size: 2.25rem;
   color: #00bc78;
   font-style: normal;
+  margin: 0;
 }
 
 .link-home {
   display: flex;
   align-items: flex-end;
-  height: 6.25rem;
   font-size: 1.12rem;
   color: #005935;
   font-weight: 500;

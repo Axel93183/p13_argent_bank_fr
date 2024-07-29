@@ -1,0 +1,6 @@
+.bg-dark-signin {
+  min-height: 35rem;
+  display: flex;
+  align-items: center;
+  background-color: #12002b;
+}
