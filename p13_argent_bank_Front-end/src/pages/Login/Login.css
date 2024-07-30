@@ -1,3 +1,7 @@
+.login-container {
+  min-width: 400px;
+}
+
 .bg-dark-login {
   min-height: 35rem;
   display: flex;
@@ -13,65 +17,6 @@
   padding: 2rem;
 }
 
-.login-button {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  border: none;
-  background-color: #00bc77;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.login-button:hover {
-  text-decoration: underline;
-}
-
 .login-icon {
   font-size: 5rem;
-}
-
-.input-remember {
-  display: flex;
-}
-
-.input-remember label {
-  margin-left: 0.25rem;
-}
-
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  margin-bottom: 1rem;
-}
-
-.input-wrapper label {
-  font-weight: bold;
-}
-
-.input-wrapper input {
-  padding: 5px;
-  font-size: 1.2rem;
-}
-
-.input-wrapper p {
-  margin: 5px 0;
-  font-size: 0.8rem;
-  color: #fa2a2a;
-}
-
-.signin-anchor {
-  text-decoration: none;
-  color: #2c3e50;
-  padding-top: 5px;
-  font-size: 0.8rem;
-}
-
-.signin-anchor:hover {
-  text-decoration: underline;
 }
