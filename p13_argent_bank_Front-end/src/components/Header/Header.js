@@ -1,4 +1,7 @@
-import argentBankLogo from "../../assets/logo/argentBankLogo.png";
+import React from "react";
+
+import Logo from "./../Logo/Logo";
+import NavItem from "./../NavItem/NavItem";
 
 import "./Header.css";
 
@@ -11,19 +14,11 @@ const Header = () => {
   return (
     <header>
       <nav className="main-nav">
-        <a className="main-nav-logo" href="/">
-          <img
-            className="main-nav-logo-image"
-            alt="Argent Bank Logo"
-            src={argentBankLogo}
-          />
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
+        <Logo />
         <div>
-          <a className="main-nav-item" href="/login">
-            <i className="fa fa-user-circle"></i>
+          <NavItem href="/login" iconClass="fa fa-user-circle">
             Login
-          </a>
+          </NavItem>
         </div>
       </nav>
     </header>
