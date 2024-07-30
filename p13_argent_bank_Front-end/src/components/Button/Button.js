@@ -7,12 +7,15 @@ import "./Button.css";
  * @param {Object} props - Component props.
  * @param {string} props.text - The text to be displayed inside the button.
  * @param {string} [props.type] - The type attribute of the button element (e.g., "button", "submit").
+ * @param {string} [props.className] - Additional class names to apply to the button.
  * @returns {JSX.Element} Button component.
  */
 
-const Button = ({ text, type }) => {
+const Button = ({ text, type, className }) => {
+  const buttonClass = className ? className : "button";
+
   return (
-    <button type={type} className="button">
+    <button type={type} className={buttonClass}>
       {text}
     </button>
   );

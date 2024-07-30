@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import Page404 from "./pages/Page404/Page404";
 import Login from "./pages/Login/Login";
 import Signin from "./pages/SignIn/SignIn";
+import User from "./pages/User/User";
 
 /**
  * App is a React component that represents the main application router.
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/error" element={<Page404 />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/user" element={<User />} />
         </Routes>
       </BrowserRouter>
     </>
