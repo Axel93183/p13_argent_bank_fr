@@ -10,4 +10,51 @@
   font-weight: bold;
   padding: 10px;
   cursor: pointer;
+  text-align: center;
+}
+
+.edit-name-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.edit-name-container input {
+  height: 1.4rem;
+}
+
+.edit-name-container label {
+  display: none;
+}
+
+.edit-name-container input {
+  width: 90%;
+  height: 1.4rem;
+  margin: 0 auto;
+}
+
+.edit-name-container button {
+  width: 10rem;
+}
+
+.edit-name-top-container,
+.edit-name-bottom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.edit-name-bottom-container {
+  flex-direction: row;
+}
+
+@media (min-width: 720px) {
+  .edit-name-top-container {
+    flex-direction: row;
+    justify-content: center;
+  }
 }

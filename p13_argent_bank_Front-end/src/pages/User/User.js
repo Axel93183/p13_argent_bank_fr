@@ -4,6 +4,8 @@ import AccountHeader from "../../components/AccountHeader/AccountHeader";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 
+import "./User.css";
+
 /**
  * User component.
  * Renders the user profile page with a header, profile header, account details, and footer.
@@ -12,7 +14,7 @@ import Header from "../../components/Header/Header";
 
 const User = () => {
   return (
-    <div>
+    <div className="user-container">
       <Header />
       <main className="main bg-dark">
         <AccountHeader />

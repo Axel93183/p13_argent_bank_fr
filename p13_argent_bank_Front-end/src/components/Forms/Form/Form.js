@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "./Form.css";
 
 /**
@@ -11,12 +11,14 @@ import "./Form.css";
  * @returns {JSX.Element} Form component.
  */
 
-const Form = ({ onSubmit, children }) => {
+const Form = ({ onSubmit, children, className }) => {
   const methods = useForm();
+
+  const formClass = className ? className : "form";
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="form">
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={formClass}>
         {children}
       </form>
     </FormProvider>
