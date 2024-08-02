@@ -75,7 +75,7 @@ const AccountHeader = () => {
               name="firstname"
               label="firstname"
               type="text"
-              placeholder="New firstname"
+              placeholder={firstName}
               value={newFirstName}
               onChange={handleFirstName}
               required={false}
@@ -84,7 +84,7 @@ const AccountHeader = () => {
               name="lastname"
               label="lastname"
               type="text"
-              placeholder="New lastname"
+              placeholder={lastName}
               value={newLastName}
               onChange={handleLastName}
               required={false}
