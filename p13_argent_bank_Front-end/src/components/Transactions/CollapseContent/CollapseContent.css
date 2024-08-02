@@ -1,0 +1,59 @@
+/* Contenu du conteneur collapse */
+.collapse-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 15px;
+  box-sizing: border-box;
+  text-align: justify;
+  position: relative;
+  top: 0;
+  z-index: 1;
+}
+
+/* Contenu ouvert */
+.collapse-content.open {
+  max-height: 1000px;
+  opacity: 1;
+  background-color: white; /* Couleur de fond avec transparence */
+  /* padding: 20px; */
+  font-size: 18px; /* Taille de la police pour les écrans plus grands */
+  font-weight: 400; /* Poids de la police pour les écrans plus grands */
+  color: #2c3e50;
+}
+
+/* Contenu fermé */
+.collapse-content.closed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 20px;
+}
+
+.collapse-text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: 1rem;
+  gap: 15px;
+  margin: 5px 0 15px 46px;
+}
+
+.collapse-text img {
+  height: 1rem;
+}
+
+.transaction-type {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.transaction-type p {
+  margin: 0;
+}
+
+.transaction-type button {
+  border: none;
+  background-color: white;
+}

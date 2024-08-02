@@ -2,6 +2,7 @@ import React from "react";
 
 import Account from "../../components/Account/Account";
 import Footer from "../../components/Footer/Footer";
+import CollapseContent from "../../components/Transactions/CollapseContent/CollapseContent";
 import CollapseTransactions from "../../components/Transactions/CollapseTransactions/CollapseTransactions";
 import Header from "./../../components/Header/Header";
 
@@ -33,6 +34,7 @@ const Transactions = () => {
             description="description"
             amount="amount"
             balance="balance"
+            content={<CollapseContent category="any" notes="any" />}
           />
           <CollapseTransactions
             date="date"
@@ -45,6 +47,7 @@ const Transactions = () => {
             description="description"
             amount="amount"
             balance="balance"
+            content={<CollapseContent category="any" notes="any" />}
           />
         </section>
       </main>
