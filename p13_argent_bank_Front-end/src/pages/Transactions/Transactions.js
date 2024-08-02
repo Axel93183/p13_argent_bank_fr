@@ -30,24 +30,24 @@ const Transactions = () => {
         />
         <section className="transactions-array">
           <CollapseTransactions
-            date="date"
-            description="description"
-            amount="amount"
-            balance="balance"
-            content={<CollapseContent category="any" notes="any" />}
+            date="01/01/2023"
+            description="Description 1"
+            amount="$50.00"
+            balance="$2,032.79"
+            content={<CollapseContent category="" notes="" />}
           />
           <CollapseTransactions
-            date="date"
-            description="description"
-            amount="amount"
-            balance="balance"
+            date="02/01/2023"
+            description="Description 2"
+            amount="$30.00"
+            balance="$2,002.79"
           />
           <CollapseTransactions
-            date="date"
-            description="description"
-            amount="amount"
-            balance="balance"
-            content={<CollapseContent category="any" notes="any" />}
+            date="03/01/2023"
+            description="Description 3"
+            amount="$20.00"
+            balance="$1,982.79"
+            content={<CollapseContent category="Travel" notes="Another note" />}
           />
         </section>
       </main>
