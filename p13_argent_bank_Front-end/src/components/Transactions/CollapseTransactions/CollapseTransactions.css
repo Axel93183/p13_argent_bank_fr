@@ -1,0 +1,129 @@
+/* Conteneur principal du composant collapse */
+.collapse-component {
+  width: 100%;
+  border: 1.3px solid black;
+  box-sizing: border-box; /* Conserve la taille du conteneur pour inclure les bordures et le padding */
+}
+
+/* Conteneur du collapse */
+.collapse-container {
+  width: 100%;
+  display: flex;
+  align-items: center; /* Centre les éléments verticalement */
+  padding: 15px;
+  background-color: white;
+  cursor: pointer;
+  box-sizing: border-box;
+  user-select: none; /* Empêche la sélection du texte */
+}
+
+/* En-tête du conteneur collapse */
+.collapse-header {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  color: #2c3e50;
+  width: 100%;
+}
+
+/* Conteneur de l'icône du chevron */
+.collapse-chevron {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Espacement entre le chevron et les items */
+}
+
+/* Icône du chevron */
+.collapse-icon {
+  transition: transform 0.5s ease; /* Animation fluide pour la rotation du chevron */
+}
+
+/* Transformation de l'icône quand ouvert */
+.collapse-icon.open {
+  transform: rotate(
+    -180deg
+  ); /* Rotation du chevron lorsque le collapse est ouvert */
+}
+
+/* Conteneur des items du collapse */
+.collapse-items {
+  display: flex;
+  flex: 1; /* Permet aux items de s'étendre sur l'espace disponible */
+  justify-content: space-between; /* Répartit les items uniformément */
+}
+
+/* Style pour les éléments collapse-item */
+.collapse-item {
+  text-align: center; /* Centre le texte à l'intérieur des items */
+  flex: 1; /* Assure que chaque item occupe l'espace disponible de manière égale */
+  margin-left: 10px; /* Espacement entre les items */
+}
+
+/* Éviter l'espacement à gauche du premier item */
+.collapse-item:first-child {
+  margin-left: 0;
+}
+
+/* Contenu du conteneur collapse */
+.collapse-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  box-sizing: border-box;
+  text-align: justify;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: max-height 0.1s ease-out, opacity 0.3s ease-out,
+    padding 0.3s ease-out;
+  position: relative;
+  top: 0;
+  z-index: 1;
+}
+
+/* Contenu ouvert */
+.collapse-content.open {
+  max-height: 1000px;
+  opacity: 1;
+  background-color: rgba(
+    246,
+    246,
+    246,
+    0.45
+  ); /* Couleur de fond avec transparence */
+  padding: 20px;
+  font-size: 18px; /* Taille de la police pour les écrans plus grands */
+  font-weight: 400; /* Poids de la police pour les écrans plus grands */
+}
+
+/* Contenu fermé */
+.collapse-content.closed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 20px;
+}
+
+/* Media Queries */
+@media (max-width: 630px) {
+  .collapse-container {
+    padding: 10px;
+  }
+
+  .collapse-content.open {
+    font-size: 12px; /* Réduit la taille de la police sur les petits écrans */
+  }
+
+  .collapse-content.closed {
+    font-size: 12px; /* Réduit la taille de la police sur les petits écrans */
+  }
+}
+
+@media (min-width: 720px) {
+  .collapse-container {
+    padding: 15px; /* Augmente le padding pour les grands écrans */
+  }
+
+  .collapse-content.open {
+    font-size: 18px; /* Augmente la taille de la police sur les grands écrans */
+  }
+}

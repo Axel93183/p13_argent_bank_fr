@@ -4,6 +4,9 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import LoginForm from "../../components/Forms/LoginForm/LoginForm";
 
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import "./Login.css";
 
 /**
@@ -18,7 +21,7 @@ const Login = () => {
       <Header />
       <main className="main bg-dark-login">
         <section className="login-content">
-          <i className="fa fa-user-circle login-icon"></i>
+          <FontAwesomeIcon icon={faUserCircle} className="login-icon" />
           <h1>Login</h1>
           <LoginForm />
         </section>

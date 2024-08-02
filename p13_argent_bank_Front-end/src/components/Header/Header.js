@@ -3,6 +3,8 @@ import React from "react";
 import Logo from "./../Logo/Logo";
 import NavItem from "./../NavItem/NavItem";
 
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
 import "./Header.css";
 
 /**
@@ -16,7 +18,7 @@ const Header = () => {
       <nav className="main-nav">
         <Logo />
         <div>
-          <NavItem href="/login" iconClass="fa fa-user-circle">
+          <NavItem href="/login" icon={faUserCircle} className="nav-icon">
             Login
           </NavItem>
         </div>

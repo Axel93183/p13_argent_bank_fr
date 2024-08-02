@@ -1,10 +1,13 @@
 import React from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import "./NavItem.css";
 
-const NavItem = ({ href, iconClass, children }) => {
+const NavItem = ({ href, icon, className, children }) => {
   return (
     <a className="main-nav-item" href={href}>
-      <i className={iconClass}></i>
+      <FontAwesomeIcon icon={icon} className={className} />
       {children}
     </a>
   );

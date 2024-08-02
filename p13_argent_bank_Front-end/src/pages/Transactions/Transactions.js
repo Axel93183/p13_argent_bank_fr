@@ -2,6 +2,7 @@ import React from "react";
 
 import Account from "../../components/Account/Account";
 import Footer from "../../components/Footer/Footer";
+import CollapseTransactions from "../../components/Transactions/CollapseTransactions/CollapseTransactions";
 import Header from "./../../components/Header/Header";
 
 import "./Transactions.css";
@@ -26,6 +27,26 @@ const Transactions = () => {
           className="transactions-page-header"
           showButton={false}
         />
+        <section className="transactions-array">
+          <CollapseTransactions
+            date="date"
+            description="description"
+            amount="amount"
+            balance="balance"
+          />
+          <CollapseTransactions
+            date="date"
+            description="description"
+            amount="amount"
+            balance="balance"
+          />
+          <CollapseTransactions
+            date="date"
+            description="description"
+            amount="amount"
+            balance="balance"
+          />
+        </section>
       </main>
       <Footer />
     </div>
