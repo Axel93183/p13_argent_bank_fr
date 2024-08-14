@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../../redux/slices/authSlice";
 
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
@@ -8,15 +10,23 @@ import FormField from "../FormField/FormField";
 import "./LoginForm.css";
 
 /**
- * LoginForm component.
- * Renders a login form with email, password fields, a remember me checkbox, and a submit button.
- * Handles form submission and logs form data to the console.
- * @returns {JSX.Element} LoginForm component.
+ * LoginForm component handles user login through a form. It integrates with Redux to manage authentication state.
+ *
+ * @returns {JSX.Element} The rendered login form, including fields for email and password, a remember me checkbox, and a submit button.
+ * Displays an error message if there is an authentication error.
  */
 
 const LoginForm = () => {
-  const onSubmit = (formData) => {
-    console.log(formData);
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
+
+  const onSubmit = (data) => {
+
+    console.log("===========================");
+    console.log("Form Data on Submit:", data);
+    console.log("===========================");
+
+    dispatch(login(data));
   };
 
   return (
@@ -36,7 +46,8 @@ const LoginForm = () => {
         required
       />
       <Checkbox name="rememberMe" textLabel="Remember me" required={false} />
-      <Button type="submit" text="Log in" />
+      <Button type="submit" text="Log in" disabled={loading} />
+      {error && <p className="error">{error}</p>}
       <a className="signin-anchor" href="/signin">
         I'm not registered yet, I want to Sign In.
       </a>

@@ -1,40 +1,45 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
-import Page404 from "./pages/Page404/Page404";
 import Login from "./pages/Login/Login";
+import Page404 from "./pages/Page404/Page404";
 import Signin from "./pages/SignIn/SignIn";
-import User from "./pages/User/User";
 import Transactions from "./pages/Transactions/Transactions";
+import User from "./pages/User/User";
 
 /**
- * App is a React component that represents the main application router.
- * It uses the `BrowserRouter` component from the `react-router-dom` library
- * to define the routing structure of the application.
+ * App component.
+ * Defines the main routes and navigation for the application.
+ * Utilizes `react-redux` for state management and `react-router-dom` for routing.
  *
- * The router configuration includes the following routes:
- * - The root path ("/") which renders the `Home` component.
- * - A wildcard path ("*") which renders the `Page404` component for any undefined routes.
- * - A specific path ("/error") which also renders the `Page404` component for error handling.
- *
- * @returns {JSX.Element} The application routes wrapped in a BrowserRouter.
+ * @returns {JSX.Element} The rendered `BrowserRouter` with `Routes` and `Route` components.
  */
 
 const App = () => {
+  const { token } = useSelector((state) => state.user);
+
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<Page404 />} />
-          <Route path="/error" element={<Page404 />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/transactions" element={<Transactions />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Page404 />} />
+        <Route path="/error" element={<Page404 />} />
+        <Route
+          path="/login"
+          element={token ? <Navigate to="/user" /> : <Login />}
+        />
+        <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/user"
+          element={token ? <User /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/transactions"
+          element={token ? <Transactions /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
