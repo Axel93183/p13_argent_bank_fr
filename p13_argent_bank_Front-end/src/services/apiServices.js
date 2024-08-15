@@ -29,6 +29,8 @@ const BASE_URL = "http://localhost:3001/api/v1";
  */
 export const loginUser = async (credentials) => {
   try {
+    console.log("Sending login data:", credentials);
+
     const response = await fetch(`${BASE_URL}/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,6 +43,46 @@ export const loginUser = async (credentials) => {
     }
 
     const data = await response.json();
+    console.log("Login successful:", data);
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
+
+/**
+ * Sends user data to the signup endpoint and retrieves the response.
+ *
+ * This function sends a POST request with user data to the /user/signup endpoint and handles the API response.
+ *
+ * @param {Object} userData - The user data to be sent for signup.
+ * @param {string} userData.email - The email of the user.
+ * @param {string} userData.password - The password of the user.
+ * @param {string} userData.username - The username of the user.
+ *
+ * @returns {Promise<Object>} A promise that resolves to the JSON response from the API.
+ *
+ * @throws {Error} Throws an error if the signup request fails or the response is not successful.
+ */
+export const signUpUser = async (userData) => {
+  try {
+    console.log("Sending signup data:", userData);
+
+    const response = await fetch(`${BASE_URL}/user/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to sign up: ${errorText}`);
+    }
+
+    const data = await response.json();
+    console.log("Signup successful:", data);
 
     return data;
   } catch (error) {

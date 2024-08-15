@@ -44,7 +44,7 @@ const LoginForm = () => {
       <Button type="submit" text="Log in" disabled={loading} />
       {error && <p className="error">{error}</p>}
       <a className="signup-anchor" href="/signup">
-        I'm not registered yet, I want to Sign In.
+        I'm not registered yet, I want to Sign Up.
       </a>
     </Form>
   );

@@ -8,3 +8,23 @@
 .login-anchor:hover {
   text-decoration: underline;
 }
+
+.signup-success {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.signup-success p {
+  font-size: 18px;
+  color: #28a745;
+}
+
+.signup-success a {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signup-success a:hover {
+  color: #0056b3;
+}

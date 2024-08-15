@@ -1,5 +1,10 @@
-import { loginUser } from "../../services/apiServices";
-import { loginFailure, loginSuccess } from "../slices/authSlice";
+import { loginUser, signUpUser } from "../../services/apiServices";
+import {
+  loginFailure,
+  loginSuccess,
+  signupFailure,
+  signupSuccess,
+} from "../slices/authSlice";
 
 /**
  * Redux middleware for handling authentication actions. It intercepts login actions, performs
@@ -22,6 +27,18 @@ const authMiddleware =
         dispatch(loginSuccess(response.body));
       } catch (error) {
         dispatch(loginFailure(error.toString()));
+      }
+    }
+
+    if (action.type === "user/signup") {
+      try {
+        const response = await signUpUser(action.payload);
+        console.log("===========================");
+        console.log("API Response:", response);
+        console.log("===========================");
+        dispatch(signupSuccess(response));
+      } catch (error) {
+        dispatch(signupFailure(error.toString()));
       }
     }
     return next(action);
