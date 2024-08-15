@@ -1,44 +1,41 @@
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Page404 from "./pages/Page404/Page404";
-import SignUp from "./pages/SignUp/SignUp";
-import Transactions from "./pages/Transactions/Transactions";
 import User from "./pages/User/User";
-
-/**
- * App component.
- * Defines the main routes and navigation for the application.
- * Utilizes `react-redux` for state management and `react-router-dom` for routing.
- *
- * @returns {JSX.Element} The rendered `BrowserRouter` with `Routes` and `Route` components.
- */
+import { logout } from "./redux/slices/authSlice";
 
 const App = () => {
-  const { token } = useSelector((state) => state.user);
+  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    console.log("Handling logout in App");
+    dispatch(logout());
+  };
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Page404 />} />
-        <Route path="/error" element={<Page404 />} />
-        <Route
-          path="/login"
-          element={token ? <Navigate to="/user" /> : <Login />}
-        />
-        <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/user"
-          element={token ? <User /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/transactions"
-          element={token ? <Transactions /> : <Navigate to="/login" />}
-        />
-      </Routes>
+      <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} user={user} />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={isLoggedIn ? <Navigate to="/user" /> : <Login />}
+          />
+          <Route
+            path="/user"
+            element={isLoggedIn ? <User /> : <Navigate to="/login" />}
+          />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 };

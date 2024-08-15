@@ -1,7 +1,5 @@
 import React from "react";
 
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
 import LoginForm from "../../components/Forms/LoginForm/LoginForm";
 
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +16,6 @@ import "./Login.css";
 const Login = () => {
   return (
     <div className="login-container">
-      <Header />
       <main className="main bg-dark-login">
         <section className="login-content">
           <FontAwesomeIcon icon={faUserCircle} className="login-icon" />
@@ -26,7 +23,6 @@ const Login = () => {
           <LoginForm />
         </section>
       </main>
-      <Footer />
     </div>
   );
 };

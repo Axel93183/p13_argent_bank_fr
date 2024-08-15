@@ -159,6 +159,17 @@ definitions:
     properties:
       token:
         type: string
+      user:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+          firstName:
+            type: string
+          lastName:
+            type: string
   UserProfile:
     type: object
     properties:

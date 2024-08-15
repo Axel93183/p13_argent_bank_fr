@@ -1,6 +1,4 @@
 import Banner from "../../components/Banner/Banner";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
 
 import iconChat from "../../assets/icons/icon-chat.png";
 import iconMoney from "../../assets/icons/icon-money.png";
@@ -32,7 +30,6 @@ const Home = () => {
 
   return (
     <div className="container-home">
-      <Header />
       <main>
         <Banner />
         <section className="features">
@@ -54,7 +51,6 @@ const Home = () => {
           />
         </section>
       </main>
-      <Footer />
     </div>
   );
 };

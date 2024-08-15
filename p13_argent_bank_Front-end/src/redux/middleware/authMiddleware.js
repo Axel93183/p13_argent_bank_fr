@@ -1,7 +1,4 @@
-import {
-  /**fetchUserDetails,*/ loginUser,
-  signUpUser,
-} from "../../services/apiServices";
+import { loginUser, signUpUser } from "../../services/apiServices";
 import {
   loginFailure,
   loginSuccess,
@@ -26,19 +23,12 @@ const authMiddleware =
   async (action) => {
     if (action.type === "user/login") {
       try {
-        // Step 1: Login to get the token
         const response = await loginUser(action.payload);
-        const token = response.body.token;
-
-        // Step 2: Fetch user details using the token
-        // const userResponse = await fetchUserDetails(token);
-
-        // Step 3: Dispatch loginSuccess with both token and user details
         dispatch(
           loginSuccess({
-            token,
-            // user: userResponse.body, // Assuming this contains user details
-          })
+            token: response.body.token,
+            user: response.body.user,
+          }),
         );
       } catch (error) {
         dispatch(loginFailure(error.toString()));

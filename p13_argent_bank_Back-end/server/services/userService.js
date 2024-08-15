@@ -66,7 +66,15 @@ module.exports.loginUser = async (serviceData) => {
       { expiresIn: "1d" },
     );
 
-    return { token };
+    return {
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
+    };
   } catch (error) {
     console.error("Error in userService.js", error);
     throw new Error(error);
@@ -85,7 +93,7 @@ module.exports.updateUserProfile = async (serviceData) => {
         firstName: serviceData.body.firstName,
         lastName: serviceData.body.lastName,
       },
-      { new: true },
+      { new: true }
     );
 
     if (!user) {

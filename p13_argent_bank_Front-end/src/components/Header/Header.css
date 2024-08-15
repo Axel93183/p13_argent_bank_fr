@@ -8,3 +8,9 @@
 .nav-icon {
   font-size: 26px;
 }
+
+.header-log {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

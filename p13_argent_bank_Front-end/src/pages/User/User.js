@@ -1,23 +1,17 @@
 import React from "react";
 import Account from "../../components/Account/Account";
 import AccountHeader from "../../components/AccountHeader/AccountHeader";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
 
+import { useSelector } from "react-redux";
 import "./User.css";
 
-/**
- * User component.
- * Renders the user profile page with a header, profile header, account details, and footer.
- * @returns {JSX.Element} User component.
- */
-
 const User = () => {
+  const { firstName, lastName } = useSelector((state) => state.user.user);
+
   return (
     <div className="user-container">
-      <Header />
       <main className="main bg-dark">
-        <AccountHeader />
+        <AccountHeader firstName={firstName} lastName={lastName} />
         <h2 className="sr-only">Accounts</h2>
         <Account
           title="Argent Bank Checking (x8349)"
@@ -35,7 +29,6 @@ const User = () => {
           description="Current Balance"
         />
       </main>
-      <Footer />
     </div>
   );
 };

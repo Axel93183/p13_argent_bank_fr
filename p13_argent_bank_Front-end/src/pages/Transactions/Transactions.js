@@ -1,10 +1,8 @@
 import React from "react";
 
 import Account from "../../components/Account/Account";
-import Footer from "../../components/Footer/Footer";
 import CollapseContent from "../../components/Transactions/CollapseContent/CollapseContent";
 import CollapseTransactions from "../../components/Transactions/CollapseTransactions/CollapseTransactions";
-import Header from "./../../components/Header/Header";
 
 import "./Transactions.css";
 
@@ -18,7 +16,6 @@ import "./Transactions.css";
 const Transactions = () => {
   return (
     <div className="transactions-container">
-      <Header />
       <main className="main bg-dark">
         <h2 className="sr-only">Transactions</h2>
         <Account
@@ -51,7 +48,6 @@ const Transactions = () => {
           />
         </section>
       </main>
-      <Footer />
     </div>
   );
 };
