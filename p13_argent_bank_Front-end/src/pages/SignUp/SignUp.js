@@ -1,29 +1,29 @@
 import React from "react";
 
 import Footer from "../../components/Footer/Footer";
+import SignUpForm from "../../components/Forms/SignUpForm/SignUpForm";
 import Header from "../../components/Header/Header";
-import SignInForm from "../../components/Forms/SignInForm/SignInForm";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "./SignIn.css";
+import "./SignUp.css";
 
 /**
- * SignIn component.
+ * SignUp component.
  * Renders the sign-in page with a form to create a new user account.
- * @returns {JSX.Element} SignIn component.
+ * @returns {JSX.Element} SignUp component.
  */
 
-const SignIn = () => {
+const SignUp = () => {
   return (
     <div className="container-login">
       <Header />
       <main className="main bg-dark-login">
         <section className="login-content">
           <FontAwesomeIcon icon={faUserCircle} className="login-icon" />
-          <h1>Sign in</h1>
-          <SignInForm />
+          <h1>Sign up</h1>
+          <SignUpForm />
         </section>
       </main>
       <Footer />
@@ -31,4 +31,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

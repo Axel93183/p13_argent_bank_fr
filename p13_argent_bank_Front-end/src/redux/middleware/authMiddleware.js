@@ -19,11 +19,6 @@ const authMiddleware =
     if (action.type === "user/login") {
       try {
         const response = await loginUser(action.payload);
-
-        console.log("===========================");
-        console.log("API Response:", response);
-        console.log("===========================");
-
         dispatch(loginSuccess(response.body));
       } catch (error) {
         dispatch(loginFailure(error.toString()));

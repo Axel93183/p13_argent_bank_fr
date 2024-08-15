@@ -3,16 +3,16 @@ import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
 import Form from "../Form/Form";
 import FormField from "../FormField/FormField";
-import "./SignInForm.css";
+import "./SignUpForm.css";
 
 /**
- * SignInForm component.
+ * SignUpForm component.
  * Renders a sign-in form with fields for email, password, confirm password, first name, last name, and terms agreement.
  * Handles form submission and logs form data to the console.
- * @returns {JSX.Element} SignInForm component.
+ * @returns {JSX.Element} SignUpForm component.
  */
 
-const SignInForm = () => {
+const SignUpForm = () => {
   const onSubmit = (formData) => {
     console.log(formData);
   };
@@ -67,4 +67,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

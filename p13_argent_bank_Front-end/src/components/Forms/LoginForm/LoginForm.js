@@ -21,11 +21,6 @@ const LoginForm = () => {
   const { loading, error } = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
-
-    console.log("===========================");
-    console.log("Form Data on Submit:", data);
-    console.log("===========================");
-
     dispatch(login(data));
   };
 
@@ -48,7 +43,7 @@ const LoginForm = () => {
       <Checkbox name="rememberMe" textLabel="Remember me" required={false} />
       <Button type="submit" text="Log in" disabled={loading} />
       {error && <p className="error">{error}</p>}
-      <a className="signin-anchor" href="/signin">
+      <a className="signup-anchor" href="/signup">
         I'm not registered yet, I want to Sign In.
       </a>
     </Form>

@@ -1,10 +1,10 @@
-.signin-anchor {
+.signup-anchor {
   text-decoration: none;
   color: #2c3e50;
   padding-top: 5px;
   font-size: 0.8rem;
 }
 
-.signin-anchor:hover {
+.signup-anchor:hover {
   text-decoration: underline;
 }

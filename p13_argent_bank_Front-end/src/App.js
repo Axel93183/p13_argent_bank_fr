@@ -4,7 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Page404 from "./pages/Page404/Page404";
-import Signin from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignUp/SignUp";
 import Transactions from "./pages/Transactions/Transactions";
 import User from "./pages/User/User";
 
@@ -29,7 +29,7 @@ const App = () => {
           path="/login"
           element={token ? <Navigate to="/user" /> : <Login />}
         />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route
           path="/user"
           element={token ? <User /> : <Navigate to="/login" />}

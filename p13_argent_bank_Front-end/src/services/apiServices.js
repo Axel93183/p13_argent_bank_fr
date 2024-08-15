@@ -8,9 +8,10 @@ const BASE_URL = "http://localhost:3001/api/v1";
 /**
  * Sends user credentials to the login endpoint and retrieves the authentication token.
  *
- * This function sends a POST request with user credentials to the `/user/login` endpoint and handles the API response. It logs the credentials sent
- * and any errors encountered during the request. If the login is successful, it returns the JSON response, which typically includes the authentication
- * token. In case of an error, it throws an error with a descriptive message.
+ * This function sends a POST request with user credentials to the `/user/login` endpoint and handles the API response.
+ * It logs the credentials sent and any errors encountered during the request.
+ * If the login is successful, it returns the JSON response, which typically includes the authentication token.
+ * In case of an error, it throws an error with a descriptive message.
  *
  * @param {Object} credentials - The user credentials to be sent for login.
  * @param {string} credentials.email - The email of the user.
@@ -28,10 +29,6 @@ const BASE_URL = "http://localhost:3001/api/v1";
  */
 export const loginUser = async (credentials) => {
   try {
-    console.log("===========================");
-    console.log("Sending credentials:", credentials);
-    console.log("===========================");
-
     const response = await fetch(`${BASE_URL}/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -44,10 +41,6 @@ export const loginUser = async (credentials) => {
     }
 
     const data = await response.json();
-
-    console.log("===========================");
-    console.log("Login successful:", data);
-    console.log("===========================");
 
     return data;
   } catch (error) {
