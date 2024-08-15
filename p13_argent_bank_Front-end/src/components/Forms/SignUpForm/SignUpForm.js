@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const { loading, error, isSignUpSuccessful } = useSelector(
-    (state) => state.user
+    (state) => state.user,
   );
 
   const onSubmit = (data) => {
