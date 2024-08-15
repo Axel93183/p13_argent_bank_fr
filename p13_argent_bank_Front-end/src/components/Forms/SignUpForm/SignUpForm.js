@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../../redux/slices/authSlice";
 import Button from "../../Button/Button";
@@ -17,15 +17,15 @@ import { Link } from "react-router-dom";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.user);
-  const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
+  const { loading, error, isSignUpSuccessful } = useSelector(
+    (state) => state.user
+  );
 
   const onSubmit = (data) => {
     console.log("===========================");
     console.log("Form Data on Submit:", data);
     console.log("===========================");
     dispatch(signup(data));
-    setIsSignUpSuccessful(true);
   };
 
   return (

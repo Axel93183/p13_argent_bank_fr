@@ -22,6 +22,7 @@ const initialState = {
   loading: false,
   error: null,
   token: null,
+  isSignUpSuccessful: false,
 };
 
 const authSlice = createSlice({
@@ -48,11 +49,12 @@ const authSlice = createSlice({
     signupSuccess: (state, action) => {
       state.loading = false;
       state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.isSignUpSuccessful = true;
     },
     signupFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      state.isSignUpSuccessful = false;
     },
     logout: (state) => {
       state.user = null;

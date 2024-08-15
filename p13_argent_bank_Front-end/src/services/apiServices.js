@@ -53,6 +53,31 @@ export const loginUser = async (credentials) => {
 };
 
 /**
+ * Fetches user details from the server using the provided token for authentication.
+ *
+ * @param {string} token - The authentication token used to authorize the request.
+ * @returns {Promise<Object>} - A promise that resolves to the user details.
+ */
+// export const fetchUserDetails = async (token) => {
+//   const response = await fetch(`${BASE_URL}/user/login`, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       "Content-Type": "application/json",
+//     },
+//   });
+
+// Vérifiez si la réponse est ok (status 200-299)
+//if (!response.ok) {
+// Si non, lancez une erreur avec le message d'erreur
+// throw new Error(`Error fetching user details: ${response.statusText}`);
+//}
+
+// Retournez les données JSON de la réponse
+// return response.json();
+//};
+
+/**
  * Sends user data to the signup endpoint and retrieves the response.
  *
  * This function sends a POST request with user data to the /user/signup endpoint and handles the API response.
