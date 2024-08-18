@@ -1,17 +1,25 @@
 import React from "react";
+
 import Account from "../../components/Account/Account";
 import AccountHeader from "../../components/AccountHeader/AccountHeader";
 
-import { useSelector } from "react-redux";
 import "./User.css";
 
-const User = () => {
-  const { firstName, lastName } = useSelector((state) => state.user.user);
+/**
+ * User page component that displays account information and user details.
+ *
+ * This component renders the user profile page, including an account header and a list of accounts with their balances.
+ * It uses `AccountHeader` to display a personalized greeting and `Account` components to show different types of accounts with their respective balances.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered User page with account details and user header.
+ */
 
+const User = () => {
   return (
     <div className="user-container">
       <main className="main bg-dark">
-        <AccountHeader firstName={firstName} lastName={lastName} />
+        <AccountHeader />
         <h2 className="sr-only">Accounts</h2>
         <Account
           title="Argent Bank Checking (x8349)"

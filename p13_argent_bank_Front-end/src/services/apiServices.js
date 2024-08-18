@@ -1,5 +1,3 @@
-import { loginSuccess } from "../redux/slices/authSlice";
-import store from "./../redux/store";
 /**
  * Base URL for the API endpoints.
  *
@@ -31,8 +29,6 @@ const BASE_URL = "http://localhost:3001/api/v1";
  */
 export const loginUser = async (credentials) => {
   try {
-    console.log("Sending login data:", credentials);
-
     const response = await fetch(`${BASE_URL}/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,10 +41,6 @@ export const loginUser = async (credentials) => {
     }
 
     const data = await response.json();
-    console.log("Login successful:", data);
-
-    // Dispatch Redux action to store token and user data
-    store.dispatch(loginSuccess(data.body));
 
     return data;
   } catch (error) {
@@ -60,21 +52,25 @@ export const loginUser = async (credentials) => {
 /**
  * Sends user data to the signup endpoint and retrieves the response.
  *
- * This function sends a POST request with user data to the /user/signup endpoint and handles the API response.
+ * This function sends a POST request with user data to the `/user/signup` endpoint and handles the API response.
  *
  * @param {Object} userData - The user data to be sent for signup.
  * @param {string} userData.email - The email of the user.
  * @param {string} userData.password - The password of the user.
  * @param {string} userData.username - The username of the user.
  *
- * @returns {Promise<Object>} A promise that resolves to the JSON response from the API.
+ * @returns {Promise<Object>} A promise that resolves to the JSON response from the API, typically containing user information or a success message.
  *
  * @throws {Error} Throws an error if the signup request fails or the response is not successful.
+ *
+ * @example
+ * const userData = { email: 'newuser@example.com', password: 'password123', username: 'newuser' };
+ * createUser(userData)
+ *   .then(response => console.log('Signup successful:', response))
+ *   .catch(error => console.error('Signup failed:', error));
  */
-export const signUpUser = async (userData) => {
+export const createUser = async (userData) => {
   try {
-    console.log("Sending signup data:", userData);
-
     const response = await fetch(`${BASE_URL}/user/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -87,7 +83,49 @@ export const signUpUser = async (userData) => {
     }
 
     const data = await response.json();
-    console.log("Signup successful:", data);
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
+
+/**
+ * Retrieves user profile information from the profile endpoint using the provided authentication token.
+ *
+ * This function sends a POST request to the `/user/profile` endpoint with an authorization token and retrieves user profile data.
+ * It logs the success message and any errors encountered during the request.
+ *
+ * @param {string} token - The authentication token used to authorize the request.
+ *
+ * @returns {Promise<Object>} A promise that resolves to the JSON response from the API, typically containing user profile information.
+ *
+ * @throws {Error} Throws an error if the request fails or the response is not successful.
+ *
+ * @example
+ * const token = 'your-authentication-token';
+ * getUserProfile(token)
+ *   .then(data => console.log('User profile fetched successfully:', data))
+ *   .catch(error => console.error('Failed to fetch user profile:', error));
+ */
+export const getUserProfile = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/profile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch user profile: ${errorText}`);
+    }
+
+    const data = await response.json();
+    console.log("User profile fetched successfully:", data);
 
     return data;
   } catch (error) {

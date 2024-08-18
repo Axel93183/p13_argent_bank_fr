@@ -1,11 +1,55 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/**
+ * Redux slice for managing user authentication state.
+ *
+ * This slice manages authentication-related state and actions, including user login, signup, and logout.
+ * It handles:
+ * - **Login**: Updates state to reflect loading status, stores the authentication token, and updates `isLoggedIn`.
+ * - **Login Success**: Updates state with the authentication token and user information, saves them to local storage.
+ * - **Login Failure**: Sets error state when login fails.
+ * - **Fetch User Profile Success**: Updates user profile information in state and local storage.
+ * - **Fetch User Profile Failure**: Sets error state when fetching user profile fails.
+ * - **Signup**: Updates state to reflect loading status.
+ * - **Signup Success**: Updates state with new user information and sets `isSignUpSuccessful`.
+ * - **Signup Failure**: Sets error state and updates `isSignUpSuccessful` when signup fails.
+ * - **Logout**: Clears user information, token, and updates local storage.
+ *
+ * @typedef {Object} AuthState
+ * @property {Object} user - The user object containing details like `id`, `firstName`, `lastName`, `email`, `createdAt`, and `updatedAt`. Default is an empty user object.
+ * @property {boolean} loading - Indicates if a login or signup request is in progress.
+ * @property {string|null} error - Stores error messages related to authentication actions.
+ * @property {string|null} token - The authentication token used for user sessions.
+ * @property {boolean} isLoggedIn - Indicates if the user is currently logged in.
+ * @property {boolean} isSignUpSuccessful - Indicates if the signup process was successful.
+ *
+ * @returns {Object} The slice containing the reducers and actions for managing authentication state.
+ * @property {Function} login - Action to initiate login and set loading state.
+ * @property {Function} loginSuccess - Action to handle successful login.
+ * @property {Function} loginFailure - Action to handle login failure.
+ * @property {Function} fetchUserProfileSuccess - Action to handle successful user profile fetch.
+ * @property {Function} fetchUserProfileFailure - Action to handle user profile fetch failure.
+ * @property {Function} signup - Action to initiate signup and set loading state.
+ * @property {Function} signupSuccess - Action to handle successful signup.
+ * @property {Function} signupFailure - Action to handle signup failure.
+ * @property {Function} logout - Action to handle user logout.
+ *
+ * @example
+ * Dispatch login action
+ * dispatch(login({ email: 'user@example.com', password: 'password123' }));
+ *
+ * Dispatch signup action
+ * dispatch(signup({ email: 'user@example.com', password: 'password123' }));
+ */
+
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || {
     id: "",
     firstName: "",
     lastName: "",
     email: "",
+    createdAt: "",
+    updatedAt: "",
   },
   loading: false,
   error: null,
@@ -24,14 +68,21 @@ const authSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.loading = false;
-      state.user = action.payload.user;
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      state.error = null;
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
       state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
       state.loading = false;
+      state.error = action.payload;
+    },
+    fetchUserProfileSuccess: (state, action) => {
+      state.user = action.payload.user;
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      state.error = null;
+    },
+    fetchUserProfileFailure: (state, action) => {
       state.error = action.payload;
     },
     signup: (state) => {
@@ -49,21 +100,20 @@ const authSlice = createSlice({
       state.isSignUpSuccessful = false;
     },
     logout: (state) => {
-      console.log("Dispatching logout action"); // Log when logout is called
-      state.user = { id: "", firstName: "", lastName: "", email: "" };
+      state.user = {};
       state.token = null;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       state.isLoggedIn = false;
     },
-    updateFirstName: (state, action) => {
-      state.user.firstName = action.payload;
-      localStorage.setItem("user", JSON.stringify(state.user)); // Mettre à jour le localStorage
-    },
-    updateLastName: (state, action) => {
-      state.user.lastName = action.payload;
-      localStorage.setItem("user", JSON.stringify(state.user)); // Mettre à jour le localStorage
-    },
+    // updateFirstName: (state, action) => {
+    //   state.user.firstName = action.payload;
+    //   localStorage.setItem("user", JSON.stringify(state.user)); // Mettre à jour le localStorage
+    // },
+    // updateLastName: (state, action) => {
+    //   state.user.lastName = action.payload;
+    //   localStorage.setItem("user", JSON.stringify(state.user)); // Mettre à jour le localStorage
+    // },
   },
 });
 
@@ -75,8 +125,10 @@ export const {
   signupSuccess,
   signupFailure,
   logout,
-  updateFirstName,
-  updateLastName,
+  fetchUserProfileSuccess,
+  fetchUserProfileFailure,
+  // updateFirstName,
+  // updateLastName,
 } = authSlice.actions;
 
 export default authSlice.reducer;

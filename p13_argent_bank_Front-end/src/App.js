@@ -1,29 +1,36 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Page404 from "./pages/Page404/Page404";
+import SignUp from "./pages/SignUp/SignUp";
 import User from "./pages/User/User";
-import { logout } from "./redux/slices/authSlice";
+
+/**
+ * App component that handles the routing and layout of the application.
+ *
+ * This component uses React Router to manage navigation between different pages of the app.
+ * It conditionally renders pages based on the user's login status and includes a header and footer.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered App component containing routes, header, and footer.
+ */
 
 const App = () => {
-  const { isLoggedIn, user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    console.log("Handling logout in App");
-    dispatch(logout());
-  };
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   return (
     <BrowserRouter>
-      <Header onLogout={handleLogout} isLoggedIn={isLoggedIn} user={user} />
+      <Header />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
             path="/login"
             element={isLoggedIn ? <Navigate to="/user" /> : <Login />}
