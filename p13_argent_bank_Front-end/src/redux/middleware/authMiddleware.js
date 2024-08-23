@@ -2,6 +2,7 @@ import {
   createUser,
   getUserProfile,
   loginUser,
+  updateUserProfile,
 } from "../../services/apiServices";
 import {
   fetchUserProfileFailure,
@@ -10,6 +11,8 @@ import {
   loginSuccess,
   signupFailure,
   signupSuccess,
+  updateFirstName,
+  updateLastName,
 } from "../slices/authSlice";
 
 /**
@@ -58,6 +61,17 @@ const authMiddleware =
         dispatch(signupSuccess(response));
       } catch (error) {
         dispatch(signupFailure(error.toString()));
+      }
+    }
+
+    if (action.type === "user/updateProfile") {
+      try {
+        const { token, userData } = action.payload;
+        const updatedUser = await updateUserProfile(token, userData);
+        dispatch(updateFirstName(updatedUser.firstName));
+        dispatch(updateLastName(updatedUser.lastName));
+      } catch (error) {
+        console.error("Profile update failed:", error);
       }
     }
     return next(action);

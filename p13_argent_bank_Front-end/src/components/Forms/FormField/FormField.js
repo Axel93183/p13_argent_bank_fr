@@ -13,7 +13,15 @@ import "./FormField.css";
  * @returns {JSX.Element} The rendered form component wrapped with `FormProvider` to provide form methods context.
  */
 
-const FormField = ({ name, label, type, placeholder, required }) => {
+const FormField = ({
+  name,
+  label,
+  type,
+  placeholder,
+  required,
+  defaultValue,
+  onChange,
+}) => {
   const {
     register,
     formState: { errors },
@@ -27,6 +35,8 @@ const FormField = ({ name, label, type, placeholder, required }) => {
         {...register(name, { required })}
         type={type}
         placeholder={placeholder}
+        defaultValue={defaultValue}
+        onChange={onChange}
       />
       {errors[name] && <p className="error-message">{label} is required</p>}
     </div>

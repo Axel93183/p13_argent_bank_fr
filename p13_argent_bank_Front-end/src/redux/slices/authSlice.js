@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { updateUserProfileThunk } from "./authThunks";
 
 /**
  * Redux slice for managing user authentication state.
@@ -106,14 +107,29 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       state.isLoggedIn = false;
     },
-    // updateFirstName: (state, action) => {
-    //   state.user.firstName = action.payload;
-    //   localStorage.setItem("user", JSON.stringify(state.user)); // Mettre à jour le localStorage
-    // },
-    // updateLastName: (state, action) => {
-    //   state.user.lastName = action.payload;
-    //   localStorage.setItem("user", JSON.stringify(state.user)); // Mettre à jour le localStorage
-    // },
+    updateFirstName: (state, action) => {
+      state.user.firstName = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    updateLastName: (state, action) => {
+      state.user.lastName = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateUserProfileThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserProfileThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = { ...state.user, ...action.payload }; // Mise à jour complète du profil utilisateur
+        localStorage.setItem("user", JSON.stringify(state.user));
+      })
+      .addCase(updateUserProfileThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
@@ -127,8 +143,8 @@ export const {
   logout,
   fetchUserProfileSuccess,
   fetchUserProfileFailure,
-  // updateFirstName,
-  // updateLastName,
+  updateFirstName,
+  updateLastName,
 } = authSlice.actions;
 
 export default authSlice.reducer;

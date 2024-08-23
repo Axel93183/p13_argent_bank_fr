@@ -133,3 +133,27 @@ export const getUserProfile = async (token) => {
     throw error;
   }
 };
+
+export const updateUserProfile = async (token, userData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/profile`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to update profile: ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
