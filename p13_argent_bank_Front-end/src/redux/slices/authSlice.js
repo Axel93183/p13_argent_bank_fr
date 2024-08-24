@@ -6,7 +6,7 @@ import { updateUserProfileThunk } from "./authThunks";
  *
  * This slice manages authentication-related state and actions, including user login, signup, and logout.
  * It handles:
- * - **Login**: Updates state to reflect loading status, stores the authentication token, and updates `isLoggedIn`.
+ * - **Login**: Updates state to reflect loading status and stores the authentication token.
  * - **Login Success**: Updates state with the authentication token and user information, saves them to local storage.
  * - **Login Failure**: Sets error state when login fails.
  * - **Fetch User Profile Success**: Updates user profile information in state and local storage.
@@ -21,7 +21,6 @@ import { updateUserProfileThunk } from "./authThunks";
  * @property {boolean} loading - Indicates if a login or signup request is in progress.
  * @property {string|null} error - Stores error messages related to authentication actions.
  * @property {string|null} token - The authentication token used for user sessions.
- * @property {boolean} isLoggedIn - Indicates if the user is currently logged in.
  * @property {boolean} isSignUpSuccessful - Indicates if the signup process was successful.
  *
  * @returns {Object} The slice containing the reducers and actions for managing authentication state.
@@ -55,12 +54,11 @@ const initialState = {
   loading: false,
   error: null,
   token: localStorage.getItem("token") || null,
-  isLoggedIn: !!localStorage.getItem("token"),
   isSignUpSuccessful: false,
 };
 
 const authSlice = createSlice({
-  name: "user",
+  name: "auth",
   initialState,
   reducers: {
     login: (state) => {
@@ -72,14 +70,13 @@ const authSlice = createSlice({
       state.error = null;
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
-      state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
     fetchUserProfileSuccess: (state, action) => {
-      state.user = action.payload.user;
+      state.auth = action.payload.user;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       state.error = null;
     },
@@ -92,7 +89,7 @@ const authSlice = createSlice({
     },
     signupSuccess: (state, action) => {
       state.loading = false;
-      state.user = action.payload.user;
+      state.auth = action.payload.user;
       state.isSignUpSuccessful = true;
     },
     signupFailure: (state, action) => {
@@ -101,19 +98,18 @@ const authSlice = createSlice({
       state.isSignUpSuccessful = false;
     },
     logout: (state) => {
-      state.user = {};
+      state.auth = {};
       state.token = null;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      state.isLoggedIn = false;
     },
     updateFirstName: (state, action) => {
-      state.user.firstName = action.payload;
-      localStorage.setItem("user", JSON.stringify(state.user));
+      state.auth.firstName = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.auth));
     },
     updateLastName: (state, action) => {
-      state.user.lastName = action.payload;
-      localStorage.setItem("user", JSON.stringify(state.user));
+      state.auth.lastName = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.auth));
     },
   },
   extraReducers: (builder) => {
@@ -123,8 +119,8 @@ const authSlice = createSlice({
       })
       .addCase(updateUserProfileThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = { ...state.user, ...action.payload }; // Mise à jour complète du profil utilisateur
-        localStorage.setItem("user", JSON.stringify(state.user));
+        state.auth = { ...state.auth, ...action.payload }; // Mise à jour complète du profil utilisateur
+        localStorage.setItem("user", JSON.stringify(state.auth));
       })
       .addCase(updateUserProfileThunk.rejected, (state, action) => {
         state.loading = false;

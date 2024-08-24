@@ -8,15 +8,20 @@ import "./AccountHeader.css";
 
 const AccountHeader = () => {
   const dispatch = useDispatch();
-  const { firstName, lastName } = useSelector((state) => state.user.user);
-  const { token } = useSelector((state) => state.user);
+  const { firstName, lastName } = useSelector((state) => state.auth.user);
+  const { token } = useSelector((state) => state.auth);
+
+  const [displayFirstName, setDisplayFirstName] = useState(firstName);
+  const [displayLastName, setDisplayLastName] = useState(lastName);
 
   const [newFirstName, setNewFirstName] = useState(firstName);
   const [newLastName, setNewLastName] = useState(lastName);
+
   const [showEditName, setShowEditName] = useState(false);
 
   useEffect(() => {
-    // Mise à jour de l'état local quand les valeurs dans le store changent
+    setDisplayFirstName(firstName);
+    setDisplayLastName(lastName);
     setNewFirstName(firstName);
     setNewLastName(lastName);
   }, [firstName, lastName]);
@@ -27,7 +32,6 @@ const AccountHeader = () => {
 
   const handleFirstName = (e) => {
     setNewFirstName(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleLastName = (e) => {
@@ -41,9 +45,6 @@ const AccountHeader = () => {
   };
 
   const handleSave = () => {
-    console.log("First Name:", newFirstName); // Log the new first name
-    console.log("Last Name:", newLastName); // Log the new last name
-
     dispatch(
       updateUserProfileThunk({
         token,
@@ -53,6 +54,8 @@ const AccountHeader = () => {
         },
       })
     ).then(() => {
+      setDisplayFirstName(newFirstName);
+      setDisplayLastName(newLastName);
       setShowEditName(false);
     });
   };
@@ -62,7 +65,7 @@ const AccountHeader = () => {
       <h1>
         Welcome back
         <br />
-        {newFirstName} {newLastName}!
+        {displayFirstName} {displayLastName}!
       </h1>
       <Button text="Edit Name" className="edit-button" onClick={handleClick} />
       {showEditName && (
@@ -72,7 +75,7 @@ const AccountHeader = () => {
               name="firstName"
               label="First Name"
               type="text"
-              placeholder="Enter your first name"
+              placeholder={newFirstName}
               defaultValue={newFirstName}
               onChange={handleFirstName}
               required={false}
@@ -81,7 +84,7 @@ const AccountHeader = () => {
               name="lastName"
               label="Last Name"
               type="text"
-              placeholder="Enter your last name"
+              placeholder={newLastName}
               defaultValue={newLastName}
               onChange={handleLastName}
               required={false}

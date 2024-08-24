@@ -13,7 +13,7 @@ import authReducer from "./authSlice";
  */
 
 const rootReducer = combineReducers({
-  user: authReducer,
+  auth: authReducer,
 });
 
 export default rootReducer;

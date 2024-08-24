@@ -22,11 +22,25 @@ import User from "./pages/User/User";
  */
 
 const App = () => {
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.auth);
+
+  const isTokenValid = () => {
+    if (!token) return false;
+    try {
+      const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+      const tokenExpirationDate = new Date(tokenPayload.exp * 1000);
+      return tokenExpirationDate > new Date();
+    } catch (error) {
+      console.error("Invalid token", error);
+      return false;
+    }
+  };
+
+  const isLoggedIn = isTokenValid();
 
   return (
     <BrowserRouter>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

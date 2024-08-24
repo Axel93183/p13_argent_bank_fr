@@ -24,8 +24,8 @@ import "./Header.css";
  * @returns {JSX.Element} The rendered Header component with navigation and user options.
  */
 
-const Header = () => {
-  const { isLoggedIn, user } = useSelector((state) => state.user);
+const Header = ({ isLoggedIn }) => {
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

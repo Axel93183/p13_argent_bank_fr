@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { signup } from "../../../redux/slices/authSlice";
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
 import Form from "../Form/Form";
 import FormField from "../FormField/FormField";
 import "./SignUpForm.css";
-import { Link } from "react-router-dom";
 
 /**
  * SignUpForm component.
@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const { loading, error, isSignUpSuccessful } = useSelector(
-    (state) => state.user,
+    (state) => state.auth
   );
 
   const onSubmit = (data) => {

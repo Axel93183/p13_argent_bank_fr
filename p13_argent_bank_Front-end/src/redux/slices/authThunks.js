@@ -6,7 +6,7 @@ export const updateUserProfileThunk = createAsyncThunk(
   async ({ token, userData }, { rejectWithValue }) => {
     try {
       const response = await updateUserProfile(token, userData);
-      return response;
+      return response.body;
     } catch (error) {
       return rejectWithValue(error.message || "Une erreur est survenue");
     }
