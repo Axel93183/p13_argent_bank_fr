@@ -8,8 +8,8 @@ import "./AccountHeader.css";
 
 const AccountHeader = () => {
   const dispatch = useDispatch();
-  const { firstName, lastName } = useSelector((state) => state.auth.user);
-  const { token } = useSelector((state) => state.auth);
+  const { firstName, lastName } = useSelector((state) => state.user.user);
+  const { token } = useSelector((state) => state.user);
 
   const [displayFirstName, setDisplayFirstName] = useState(firstName);
   const [displayLastName, setDisplayLastName] = useState(lastName);

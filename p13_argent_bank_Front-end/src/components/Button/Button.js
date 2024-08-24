@@ -12,11 +12,16 @@ import "./Button.css";
  * @returns {JSX.Element} Button component.
  */
 
-const Button = ({ text, type, className, onClick }) => {
+const Button = ({ text, type, className, onClick, disabled }) => {
   const buttonClass = className ? className : "button";
 
   return (
-    <button type={type} className={buttonClass} onClick={onClick}>
+    <button
+      type={type}
+      className={buttonClass}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {text}
     </button>
   );

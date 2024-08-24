@@ -22,7 +22,7 @@ import User from "./pages/User/User";
  */
 
 const App = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.user);
 
   const isTokenValid = () => {
     if (!token) return false;

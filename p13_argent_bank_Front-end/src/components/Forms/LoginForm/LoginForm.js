@@ -18,7 +18,7 @@ import "./LoginForm.css";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
     dispatch(login(data));

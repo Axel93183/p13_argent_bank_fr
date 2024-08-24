@@ -25,7 +25,7 @@ import "./Header.css";
  */
 
 const Header = ({ isLoggedIn }) => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

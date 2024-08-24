@@ -58,7 +58,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState,
   reducers: {
     login: (state) => {
@@ -76,7 +76,7 @@ const authSlice = createSlice({
       state.error = action.payload;
     },
     fetchUserProfileSuccess: (state, action) => {
-      state.auth = action.payload.user;
+      state.user = action.payload.user;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       state.error = null;
     },
@@ -89,7 +89,7 @@ const authSlice = createSlice({
     },
     signupSuccess: (state, action) => {
       state.loading = false;
-      state.auth = action.payload.user;
+      state.user = action.payload.user;
       state.isSignUpSuccessful = true;
     },
     signupFailure: (state, action) => {
@@ -98,18 +98,18 @@ const authSlice = createSlice({
       state.isSignUpSuccessful = false;
     },
     logout: (state) => {
-      state.auth = {};
+      state.user = {};
       state.token = null;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
     },
     updateFirstName: (state, action) => {
-      state.auth.firstName = action.payload;
-      localStorage.setItem("user", JSON.stringify(state.auth));
+      state.user.firstName = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
     },
     updateLastName: (state, action) => {
-      state.auth.lastName = action.payload;
-      localStorage.setItem("user", JSON.stringify(state.auth));
+      state.user.lastName = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
     },
   },
   extraReducers: (builder) => {
@@ -119,8 +119,8 @@ const authSlice = createSlice({
       })
       .addCase(updateUserProfileThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.auth = { ...state.auth, ...action.payload }; // Mise à jour complète du profil utilisateur
-        localStorage.setItem("user", JSON.stringify(state.auth));
+        state.user = { ...state.user, ...action.payload }; // Mise à jour complète du profil utilisateur
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(updateUserProfileThunk.rejected, (state, action) => {
         state.loading = false;

@@ -18,7 +18,7 @@ import "./SignUpForm.css";
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const { loading, error, isSignUpSuccessful } = useSelector(
-    (state) => state.auth
+    (state) => state.user
   );
 
   const onSubmit = (data) => {
