@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { logout } from "../../redux/slices/authSlice";
 
@@ -27,12 +26,9 @@ import "./Header.css";
 const Header = ({ isLoggedIn }) => {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const handleLogout = (e) => {
-    e.preventDefault();
+  const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
   };
 
   return (

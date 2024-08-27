@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { signup } from "../../../redux/slices/authSlice";
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
@@ -28,12 +27,20 @@ const SignUpForm = () => {
     dispatch(signup(data));
   };
 
+  const handleLoginLinkClick = () => {
+    window.location.href = "/login";
+  };
+
   return (
     <>
       {isSignUpSuccessful ? (
         <div className="signup-success">
           <p>Votre inscription a bien été prise en compte.</p>
-          <Link to="/login">Cliquez ici pour vous connecter.</Link>
+          <Button
+            className="btn-login-link"
+            onClick={handleLoginLinkClick}
+            text="Se connecter"
+          />
         </div>
       ) : (
         <Form onSubmit={onSubmit}>

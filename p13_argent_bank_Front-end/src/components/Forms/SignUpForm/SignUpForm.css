@@ -1,12 +1,11 @@
-.login-anchor {
-  text-decoration: none;
-  color: #2c3e50;
-  padding-top: 5px;
-  font-size: 0.8rem;
-}
-
-.login-anchor:hover {
-  text-decoration: underline;
+.btn-login-link {
+  color: #203f5e;
+  font-size: 18px;
+  width: 80%;
+  height: 2rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
 }
 
 .signup-success {
@@ -17,14 +16,4 @@
 .signup-success p {
   font-size: 18px;
   color: #28a745;
-}
-
-.signup-success a {
-  color: #007bff;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.signup-success a:hover {
-  color: #0056b3;
 }

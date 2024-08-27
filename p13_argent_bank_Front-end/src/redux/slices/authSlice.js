@@ -57,6 +57,8 @@ const initialState = {
   token:
     sessionStorage.getItem("token") || localStorage.getItem("token") || null,
   isSignUpSuccessful: false,
+  isLoggedIn:
+    !!sessionStorage.getItem("token") || !!localStorage.getItem("token"),
 };
 
 const authSlice = createSlice({
@@ -71,6 +73,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.token = action.payload.token;
+      state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
       state.loading = false;
@@ -98,8 +101,17 @@ const authSlice = createSlice({
       state.isSignUpSuccessful = false;
     },
     logout: (state) => {
-      state.user = {};
+      state.user = {
+        id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        createdAt: "",
+        updatedAt: "",
+      };
       state.token = null;
+      state.isLoggedIn = false;
+      state.isSignUpSuccessful = false;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       sessionStorage.removeItem("user");

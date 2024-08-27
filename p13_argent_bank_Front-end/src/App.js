@@ -1,10 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Page404 from "./pages/Page404/Page404";
@@ -22,22 +19,7 @@ import User from "./pages/User/User";
  */
 
 const App = () => {
-  const { token } = useSelector((state) => state.user);
-
-  const isTokenValid = () => {
-    if (!token) return false;
-    try {
-      const tokenPayload = JSON.parse(atob(token.split(".")[1]));
-      const tokenExpirationDate = new Date(tokenPayload.exp * 1000);
-      return tokenExpirationDate > new Date();
-    } catch (error) {
-      console.error("Invalid token", error);
-      return false;
-    }
-  };
-
-  const isLoggedIn = isTokenValid();
-
+  const { isLoggedIn } = useSelector((state) => state.user);
   return (
     <BrowserRouter>
       <Header isLoggedIn={isLoggedIn} />
