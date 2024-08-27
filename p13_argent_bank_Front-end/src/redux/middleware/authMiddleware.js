@@ -42,13 +42,18 @@ const authMiddleware =
       try {
         const response = await loginUser(action.payload);
         const token = response.body.token;
-        dispatch(
-          loginSuccess({
-            token,
-          })
-        );
         const userProfile = await getUserProfile(token);
+
+        dispatch(loginSuccess({ token }));
         dispatch(fetchUserProfileSuccess({ user: userProfile.body }));
+
+        if (action.payload.rememberMe) {
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(userProfile.body));
+        } else {
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("user", JSON.stringify(userProfile.body));
+        }
       } catch (error) {
         dispatch(loginFailure(error.toString()));
         dispatch(fetchUserProfileFailure(error.toString()));
@@ -74,6 +79,7 @@ const authMiddleware =
         console.error("Profile update failed:", error);
       }
     }
+
     return next(action);
   };
 
