@@ -37,7 +37,15 @@ export const loginUser = async (credentials) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to login: ${errorText}`);
+      // Parse le texte en JSON pour accéder au message d'erreur
+      const errorData = JSON.parse(errorText);
+
+      // Accéder au message d'erreur
+      const errorMessage = errorData.message || "An unknown error occurred";
+
+      console.log("Type de l 'erreur ", errorMessage);
+
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();

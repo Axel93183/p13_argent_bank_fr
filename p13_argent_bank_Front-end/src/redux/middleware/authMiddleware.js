@@ -8,45 +8,47 @@ import {
   fetchUserProfileFailure,
   fetchUserProfileSuccess,
   loginFailure,
+  loginRequest,
   loginSuccess,
   signupFailure,
+  signupRequest,
   signupSuccess,
   updateFirstName,
   updateLastName,
 } from "../slices/authSlice";
-
-/**
- * Middleware for handling authentication-related actions in Redux.
- *
- * This middleware intercepts actions related to user login and signup. It performs asynchronous API calls to handle these actions:
- * - **Login**: Sends login credentials to the server, processes the response to store the authentication token, and fetches the user profile.
- * - **Signup**: Sends user registration details to the server and handles the response accordingly.
- *
- * On successful login, it dispatches `loginSuccess` with the token and `fetchUserProfileSuccess` with the user profile data.
- * On login or signup failure, it dispatches `loginFailure`, `fetchUserProfileFailure`, or `signupFailure` with the error message.
- *
- * @param {Object} param - The parameter object.
- * @param {Function} param.dispatch - The dispatch function to send actions to the Redux store.
- * @returns {Function} The middleware function that processes actions.
- *
- * @example
- * const action = { type: 'user/login', payload: { email: 'user@example.com', password: 'password123' } };
- * dispatch(action);
- */
 
 const authMiddleware =
   ({ dispatch }) =>
   (next) =>
   async (action) => {
     if (action.type === "user/login") {
+      dispatch(loginRequest());
       try {
+        // Envoyer la requête POST pour se connecter
         const response = await loginUser(action.payload);
+
+        // Vérifier si la réponse contient une erreur
+        if (response.error) {
+          throw new Error(response.error.message || "Login failed");
+        }
+
         const token = response.body.token;
+
+        // Envoyer une requête pour obtenir le profil de l'utilisateur
         const userProfile = await getUserProfile(token);
 
+        // Vérifier si la réponse de profil contient une erreur
+        if (userProfile.error) {
+          throw new Error(
+            userProfile.error.message || "Failed to fetch user profile"
+          );
+        }
+
+        // Si aucune erreur n'est trouvée, dispatcher les actions de succès
         dispatch(loginSuccess({ token }));
         dispatch(fetchUserProfileSuccess({ user: userProfile.body }));
 
+        // Sauvegarder les informations dans le stockage local ou de session
         if (action.payload.rememberMe) {
           localStorage.setItem("token", token);
           localStorage.setItem("user", JSON.stringify(userProfile.body));
@@ -55,31 +57,54 @@ const authMiddleware =
           sessionStorage.setItem("user", JSON.stringify(userProfile.body));
         }
       } catch (error) {
-        dispatch(loginFailure(error.toString()));
-        dispatch(fetchUserProfileFailure(error.toString()));
+        const message = error.message;
+        const errorDetails = {
+          general: message,
+          email: message.includes("User not found") ? message : null,
+          password: message.includes("Password is invalid") ? message : null,
+        };
+
+        dispatch(loginFailure({ error: errorDetails }));
+        dispatch(fetchUserProfileFailure({ error: errorDetails }));
       }
     }
 
     if (action.type === "user/signup") {
+      dispatch(signupRequest());
+
       try {
+        // Envoyer la requête POST pour l'inscription
         const response = await createUser(action.payload);
-        dispatch(signupSuccess(response));
+
+        // Vérifier si la réponse contient une erreur
+        if (response.error) {
+          throw new Error(response.error.message || "Signup failed");
+        }
+
+        // Si aucune erreur n'est trouvée, dispatcher les actions de succès
+        dispatch(signupSuccess({ user: response.body }));
       } catch (error) {
-        dispatch(signupFailure(error.toString()));
+        // En cas d'erreur, dispatcher l'action d'échec
+        dispatch(signupFailure({ message: error.message }));
       }
     }
 
     if (action.type === "user/updateProfile") {
       try {
+        // Envoyer la requête PUT pour mettre à jour le profil
         const { token, userData } = action.payload;
         const updatedUser = await updateUserProfile(token, userData);
+
+        // Si la mise à jour réussit, dispatcher les actions de succès
         dispatch(updateFirstName(updatedUser.firstName));
         dispatch(updateLastName(updatedUser.lastName));
       } catch (error) {
-        console.error("Profile update failed:", error);
+        // En cas d'erreur, loguer l'erreur
+        console.error("Profile update failed:", error.message);
       }
     }
 
+    // Passer l'action suivante dans le middleware
     return next(action);
   };
 

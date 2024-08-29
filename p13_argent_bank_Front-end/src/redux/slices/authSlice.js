@@ -53,7 +53,7 @@ const initialState = {
       updatedAt: "",
     },
   loading: false,
-  error: null,
+  error: { email: null, password: null, general: null }, // Erreurs spécifiques
   token:
     sessionStorage.getItem("token") || localStorage.getItem("token") || null,
   isSignUpSuccessful: false,
@@ -65,30 +65,35 @@ const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state) => {
+    loginRequest: (state) => {
       state.loading = true;
-      state.error = null;
+      state.error = {};
     },
     loginSuccess: (state, action) => {
       state.loading = false;
-      state.error = null;
+      state.error = {};
       state.token = action.payload.token;
       state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
+      console.log("Reducer loginFailure called with", action.payload); // Ajoutez ce log pour vérifier la payload
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.error || { general: action.payload.message };
     },
     fetchUserProfileSuccess: (state, action) => {
       state.user = action.payload.user;
-      state.error = null;
+      state.error = {};
     },
     fetchUserProfileFailure: (state, action) => {
-      state.error = action.payload;
+      console.log(
+        "Reducer fetchUserProfileFailure called with",
+        action.payload
+      );
+      state.error = action.payload.error || { general: action.payload.message };
     },
-    signup: (state) => {
+    signupRequest: (state) => {
       state.loading = true;
-      state.error = null;
+      state.error = {};
     },
     signupSuccess: (state, action) => {
       state.loading = false;
@@ -96,8 +101,9 @@ const authSlice = createSlice({
       state.isSignUpSuccessful = true;
     },
     signupFailure: (state, action) => {
+      console.log("Reducer signupFailure called with", action.payload);
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.error || { general: action.payload.message };
       state.isSignUpSuccessful = false;
     },
     logout: (state) => {
@@ -141,10 +147,10 @@ const authSlice = createSlice({
 });
 
 export const {
-  login,
+  loginRequest,
   loginSuccess,
   loginFailure,
-  signup,
+  signupRequest,
   signupSuccess,
   signupFailure,
   logout,

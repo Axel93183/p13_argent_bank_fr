@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../../../redux/slices/authSlice";
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
 import Form from "../Form/Form";
@@ -21,10 +20,7 @@ const SignUpForm = () => {
   );
 
   const onSubmit = (data) => {
-    console.log("===========================");
-    console.log("Form Data on Submit:", data);
-    console.log("===========================");
-    dispatch(signup(data));
+    dispatch({ type: "user/signup", payload: data });
   };
 
   const handleLoginLinkClick = () => {
@@ -85,7 +81,7 @@ const SignUpForm = () => {
             required={true}
           />
           <Button type="submit" text="Sign Up" disabled={loading} />
-          {error && <p className="error">{error}</p>}
+          {error.message && <p className="error">{error.message}</p>}
           <a className="login-anchor" href="/login">
             Already have an account ? Log in here.
           </a>
