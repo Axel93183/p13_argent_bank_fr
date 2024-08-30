@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
@@ -18,9 +18,27 @@ const SignUpForm = () => {
   const { loading, error, isSignUpSuccessful } = useSelector(
     (state) => state.user
   );
+  const [localError, setLocalError] = useState({ ...error });
+  const [validationError, setValidationError] = useState({});
 
   const onSubmit = (data) => {
+    setValidationError({});
+    setLocalError({});
+
+    if (data.password !== data.confirmPassword) {
+      setValidationError({
+        confirmPassword: "Passwords do not match.",
+      });
+      return;
+    }
     dispatch({ type: "user/signup", payload: data });
+  };
+
+  const handleInputChange = (fieldName) => {
+    setLocalError({ ...localError, [fieldName]: null });
+    if (fieldName === "confirmPassword") {
+      setValidationError({ confirmPassword: null });
+    }
   };
 
   const handleLoginLinkClick = () => {
@@ -46,6 +64,7 @@ const SignUpForm = () => {
             type="email"
             placeholder="Enter your email"
             required
+            error={localError.email}
           />
           <FormField
             name="password"
@@ -53,6 +72,7 @@ const SignUpForm = () => {
             type="password"
             placeholder="Enter your password"
             required
+            error={localError.password}
           />
           <FormField
             name="confirmPassword"
@@ -60,6 +80,8 @@ const SignUpForm = () => {
             type="password"
             placeholder="Confirm your password"
             required
+            error={validationError.confirmPassword}
+            onChange={() => handleInputChange("confirmPassword")}
           />
           <FormField
             name="firstName"
@@ -81,9 +103,8 @@ const SignUpForm = () => {
             required={true}
           />
           <Button type="submit" text="Sign Up" disabled={loading} />
-          {error.message && <p className="error">{error.message}</p>}
           <a className="login-anchor" href="/login">
-            Already have an account ? Log in here.
+            Already have an account? Log in here.
           </a>
         </Form>
       )}

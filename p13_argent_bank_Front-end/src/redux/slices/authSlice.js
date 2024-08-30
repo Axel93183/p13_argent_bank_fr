@@ -53,7 +53,7 @@ const initialState = {
       updatedAt: "",
     },
   loading: false,
-  error: { email: null, password: null, general: null }, // Erreurs spécifiques
+  error: { email: null, password: null },
   token:
     sessionStorage.getItem("token") || localStorage.getItem("token") || null,
   isSignUpSuccessful: false,
@@ -76,9 +76,9 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
-      console.log("Reducer loginFailure called with", action.payload); // Ajoutez ce log pour vérifier la payload
+      console.log("Reducer loginFailure called with", action.payload);
       state.loading = false;
-      state.error = action.payload.error || { general: action.payload.message };
+      state.error = action.payload.error;
     },
     fetchUserProfileSuccess: (state, action) => {
       state.user = action.payload.user;
@@ -89,7 +89,7 @@ const authSlice = createSlice({
         "Reducer fetchUserProfileFailure called with",
         action.payload
       );
-      state.error = action.payload.error || { general: action.payload.message };
+      state.error = action.payload.error;
     },
     signupRequest: (state) => {
       state.loading = true;
@@ -103,7 +103,7 @@ const authSlice = createSlice({
     signupFailure: (state, action) => {
       console.log("Reducer signupFailure called with", action.payload);
       state.loading = false;
-      state.error = action.payload.error || { general: action.payload.message };
+      state.error = action.payload.error;
       state.isSignUpSuccessful = false;
     },
     logout: (state) => {

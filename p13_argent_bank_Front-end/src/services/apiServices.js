@@ -87,7 +87,10 @@ export const createUser = async (userData) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to sign up: ${errorText}`);
+      const errorData = JSON.parse(errorText);
+      const errorMessage = errorData.message || "An unknown error occurred";
+
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
