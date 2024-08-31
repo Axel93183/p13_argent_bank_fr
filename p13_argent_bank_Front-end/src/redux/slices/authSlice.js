@@ -106,6 +106,9 @@ const authSlice = createSlice({
       state.error = action.payload.error;
       state.isSignUpSuccessful = false;
     },
+    clearFieldError: (state, action) => {
+      delete state.error[action.payload];
+    },
     logout: (state) => {
       state.user = {
         id: "",
@@ -153,6 +156,7 @@ export const {
   signupRequest,
   signupSuccess,
   signupFailure,
+  clearFieldError,
   logout,
   fetchUserProfileSuccess,
   fetchUserProfileFailure,

@@ -1,16 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
+import { clearFieldError } from "../../../redux/slices/authSlice";
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
 import Form from "../Form/Form";
 import FormField from "../FormField/FormField";
 import "./LoginForm.css";
-
 const LoginForm = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
     dispatch({ type: "user/login", payload: data });
+  };
+
+  const handleInputChange = (fieldName) => {
+    dispatch(clearFieldError(fieldName));
   };
 
   return (
@@ -22,6 +26,7 @@ const LoginForm = () => {
         placeholder="Enter your email"
         required
         error={error.email}
+        onInput={() => handleInputChange("email")}
       />
       <FormField
         name="password"
@@ -30,6 +35,7 @@ const LoginForm = () => {
         placeholder="Enter your password"
         required
         error={error.password}
+        onInput={() => handleInputChange("password")}
       />
       <Checkbox name="rememberMe" textLabel="Remember me" required={false} />
       <Button type="submit" text="Log in" disabled={loading} />

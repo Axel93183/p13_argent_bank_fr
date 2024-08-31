@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { clearFieldError } from "../../../redux/slices/authSlice";
+
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
 import Form from "../Form/Form";
@@ -18,12 +20,11 @@ const SignUpForm = () => {
   const { loading, error, isSignUpSuccessful } = useSelector(
     (state) => state.user
   );
-  const [localError, setLocalError] = useState({ ...error });
+
   const [validationError, setValidationError] = useState({});
 
   const onSubmit = (data) => {
     setValidationError({});
-    setLocalError({});
 
     if (data.password !== data.confirmPassword) {
       setValidationError({
@@ -31,18 +32,23 @@ const SignUpForm = () => {
       });
       return;
     }
-    dispatch({ type: "user/signup", payload: data });
-  };
 
-  const handleInputChange = (fieldName) => {
-    setLocalError({ ...localError, [fieldName]: null });
-    if (fieldName === "confirmPassword") {
-      setValidationError({ confirmPassword: null });
-    }
+    dispatch({ type: "user/signup", payload: data });
   };
 
   const handleLoginLinkClick = () => {
     window.location.href = "/login";
+  };
+
+  const handleInputChange = (fieldName) => {
+    dispatch(clearFieldError(fieldName));
+  };
+
+  const handleConfirmPasswordInput = () => {
+    setValidationError((prevErrors) => ({
+      ...prevErrors,
+      confirmPassword: "",
+    }));
   };
 
   return (
@@ -64,7 +70,8 @@ const SignUpForm = () => {
             type="email"
             placeholder="Enter your email"
             required
-            error={localError.email}
+            error={error.email}
+            onInput={() => handleInputChange("email")}
           />
           <FormField
             name="password"
@@ -72,7 +79,6 @@ const SignUpForm = () => {
             type="password"
             placeholder="Enter your password"
             required
-            error={localError.password}
           />
           <FormField
             name="confirmPassword"
@@ -81,7 +87,7 @@ const SignUpForm = () => {
             placeholder="Confirm your password"
             required
             error={validationError.confirmPassword}
-            onChange={() => handleInputChange("confirmPassword")}
+            onInput={handleConfirmPasswordInput}
           />
           <FormField
             name="firstName"

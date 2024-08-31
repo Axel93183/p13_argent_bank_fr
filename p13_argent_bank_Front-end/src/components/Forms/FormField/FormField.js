@@ -20,7 +20,7 @@ const FormField = ({
   placeholder,
   required,
   defaultValue,
-  onChange,
+  onInput,
   error,
 }) => {
   const {
@@ -37,7 +37,7 @@ const FormField = ({
         type={type}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        onChange={onChange}
+        onInput={onInput}
       />
       {errors[name] && <p className="error-message">{label} is required</p>}
       {error && <p className="error-message">{error}</p>}
