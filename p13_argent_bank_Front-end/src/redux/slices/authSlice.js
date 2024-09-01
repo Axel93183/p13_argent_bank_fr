@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateUserProfileThunk } from "./authThunks";
+// import { updateUserProfileThunk } from "./authThunks";
 
 /**
  * Redux slice for managing user authentication state.
@@ -53,7 +53,7 @@ const initialState = {
       updatedAt: "",
     },
   loading: false,
-  error: { email: null, password: null },
+  error: { email: null, password: null, general: null },
   token:
     sessionStorage.getItem("token") || localStorage.getItem("token") || null,
   isSignUpSuccessful: false,
@@ -132,20 +132,9 @@ const authSlice = createSlice({
     updateLastName: (state, action) => {
       state.user.lastName = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(updateUserProfileThunk.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(updateUserProfileThunk.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = { ...state.user, ...action.payload };
-      })
-      .addCase(updateUserProfileThunk.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+    updateDataFailure: (state, action) => {
+      state.error = action.payload.error;
+    },
   },
 });
 
@@ -162,6 +151,7 @@ export const {
   fetchUserProfileFailure,
   updateFirstName,
   updateLastName,
+  updateDataFailure,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -37,13 +37,8 @@ export const loginUser = async (credentials) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      // Parse le texte en JSON pour accéder au message d'erreur
       const errorData = JSON.parse(errorText);
-
-      // Accéder au message d'erreur
       const errorMessage = errorData.message || "An unknown error occurred";
-
-      console.log("Type de l 'erreur ", errorMessage);
 
       throw new Error(errorMessage);
     }
@@ -132,11 +127,13 @@ export const getUserProfile = async (token) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to fetch user profile: ${errorText}`);
+      const errorData = JSON.parse(errorText);
+      const errorMessage = errorData.message || "An unknown error occurred";
+
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
-    console.log("User profile fetched successfully:", data);
 
     return data;
   } catch (error) {
@@ -158,10 +155,14 @@ export const updateUserProfile = async (token, userData) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Failed to update profile: ${errorText}`);
+      const errorData = JSON.parse(errorText);
+      const errorMessage = errorData.message || "An unknown error occurred";
+
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error("API Error:", error);

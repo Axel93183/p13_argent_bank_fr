@@ -13,6 +13,7 @@ import {
   signupFailure,
   signupRequest,
   signupSuccess,
+  updateDataFailure,
   updateFirstName,
   updateLastName,
 } from "../slices/authSlice";
@@ -87,12 +88,23 @@ const authMiddleware =
     if (action.type === "user/updateProfile") {
       try {
         const { token, userData } = action.payload;
+
         const updatedUser = await updateUserProfile(token, userData);
 
-        dispatch(updateFirstName(updatedUser.firstName));
-        dispatch(updateLastName(updatedUser.lastName));
+        if (updatedUser.error) {
+          throw new Error(updatedUser.error.message || "Update failed");
+        }
+
+        dispatch(updateFirstName(updatedUser.body.firstName));
+        dispatch(updateLastName(updatedUser.body.lastName));
       } catch (error) {
-        console.error("Profile update failed:", error.message);
+        const message = error.message;
+        const errorDetails = {
+          general: message,
+        };
+        dispatch(updateDataFailure({ error: errorDetails }));
+
+        console.error("Profile update failed:", message);
       }
     }
 

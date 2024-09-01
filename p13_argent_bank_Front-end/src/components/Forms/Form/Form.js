@@ -12,7 +12,7 @@ import "./Form.css";
  *
  * @returns {JSX.Element} The rendered form component wrapped with `FormProvider` to provide form methods context.
  */
-const Form = ({ onSubmit, children, className }) => {
+const Form = ({ onSubmit, children, className, error }) => {
   const methods = useForm();
 
   const formClass = className ? className : "form";
@@ -21,6 +21,7 @@ const Form = ({ onSubmit, children, className }) => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className={formClass}>
         {children}
+        {error && <p className="error-message">{error}</p>}
       </form>
     </FormProvider>
   );
