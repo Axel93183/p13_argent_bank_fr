@@ -6,6 +6,7 @@ import {
 } from "../../services/apiServices";
 import {
   fetchUserProfileFailure,
+  fetchUserProfileRequest,
   fetchUserProfileSuccess,
   loginFailure,
   loginRequest,
@@ -105,6 +106,27 @@ const authMiddleware =
         dispatch(updateDataFailure({ error: errorDetails }));
 
         console.error("Profile update failed:", message);
+      }
+    }
+
+    if (action.type === "user/fetchProfile") {
+      dispatch(fetchUserProfileRequest());
+      try {
+        const userProfile = await getUserProfile(action.payload.token);
+
+        if (userProfile.error) {
+          throw new Error(
+            userProfile.error.message || "Failed to fetch user profile"
+          );
+        }
+
+        dispatch(fetchUserProfileSuccess({ user: userProfile.body }));
+      } catch (error) {
+        dispatch(
+          fetchUserProfileFailure({
+            error: { general: error.message },
+          })
+        );
       }
     }
 

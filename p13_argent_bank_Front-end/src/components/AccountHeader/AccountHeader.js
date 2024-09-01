@@ -7,8 +7,16 @@ import "./AccountHeader.css";
 
 const AccountHeader = () => {
   const dispatch = useDispatch();
-  const { firstName, lastName } = useSelector((state) => state.user.user);
+
   const { token, error } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (token) {
+      dispatch({ type: "user/fetchProfile", payload: { token } });
+    }
+  }, [dispatch, token]);
+
+  const { firstName, lastName } = useSelector((state) => state.user.user);
 
   const [displayFirstName, setDisplayFirstName] = useState(firstName);
   const [displayLastName, setDisplayLastName] = useState(lastName);

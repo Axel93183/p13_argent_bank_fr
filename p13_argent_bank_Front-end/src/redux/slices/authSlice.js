@@ -80,15 +80,16 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload.error;
     },
+    fetchUserProfileRequest(state) {
+      state.loading = true;
+    },
     fetchUserProfileSuccess: (state, action) => {
+      state.loading = false;
       state.user = action.payload.user;
       state.error = {};
     },
     fetchUserProfileFailure: (state, action) => {
-      console.log(
-        "Reducer fetchUserProfileFailure called with",
-        action.payload
-      );
+      state.loading = false;
       state.error = action.payload.error;
     },
     signupRequest: (state) => {
@@ -147,6 +148,7 @@ export const {
   signupFailure,
   clearFieldError,
   logout,
+  fetchUserProfileRequest,
   fetchUserProfileSuccess,
   fetchUserProfileFailure,
   updateFirstName,
