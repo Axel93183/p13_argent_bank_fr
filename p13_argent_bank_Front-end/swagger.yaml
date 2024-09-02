@@ -8,17 +8,18 @@ host: localhost:3001
 basePath: /api/v1
 schemes:
   - http
+  - https
 paths:
   /user/login:
     post:
       tags:
         - User Module
       summary: Login
-      description: API for Login
+      description: API for logging in. Returns a JWT token for authentication.
       parameters:
         - in: body
           name: body
-          description: Login Payload
+          description: Login payload
           required: true
           schema:
             $ref: "#/definitions/Login"
@@ -26,90 +27,253 @@ paths:
         - application/json
       responses:
         "200":
-          description: Login Successfully
+          description: Successful login
           schema:
             $ref: "#/definitions/LoginResponse"
         "400":
-          description: Invalid Fields
+          description: Invalid fields
         "500":
-          description: Internal Server Error
+          description: Internal server error
   /user/signup:
     post:
       tags:
         - User Module
       summary: Signup
-      description: API for Signup
+      description: API for signing up.
       parameters:
         - in: body
           name: body
-          description: Signup Payload
+          description: Signup payload
           required: true
           schema:
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/SignUpRequest"
       produces:
         - application/json
       responses:
         "200":
-          description: Signup Successfully
+          description: Successful signup
           schema:
-            $ref: "#/definitions/ApiResponse"
+            $ref: "#/definitions/SignUpResponse"
         "400":
-          description: Invalid Fields
+          description: Invalid fields
         "500":
-          description: Internal Server Error
+          description: Internal server error
   /user/profile:
     post:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
+      summary: Get user profile
+      description: API to retrieve the authenticated user's profile.
       parameters:
         - in: header
           type: string
           name: Authorization
-          description: Attach Bearer JWT token
+          description: Include the JWT Bearer token
           required: true
       produces:
         - application/json
       responses:
         "200":
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
-            $ref: "#/definitions/ApiResponse"
+            $ref: "#/definitions/UserProfileResponse"
         "400":
-          description: Invalid Fields
+          description: Invalid fields
+        "401":
+          description: Unauthorized. Authentication is required to access the resource.
+        "498":
+          description: Token expired/invalid. The token has expired or is invalid.
         "500":
-          description: Internal Server Error
+          description: Internal server error
+
     put:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: User Profile API
-      description: API for updating a user profile
+      summary: Update user profile
+      description: API to update the authenticated user's profile.
       parameters:
         - in: header
           type: string
           name: Authorization
-          description: Attach Bearer JWT token
+          description: Include the JWT Bearer token
           required: true
         - in: body
           name: body
-          description: Update user profile attributes
+          description: User profile attributes to update
           required: true
           schema:
-            $ref: "#/definitions/UserProfile"
+            $ref: "#/definitions/UserUpdatedRequest"
       produces:
         - application/json
       responses:
         "200":
-          description: User profile retrieved successully
+          description: User profile updated successfully
           schema:
-            $ref: "#/definitions/ApiResponse"
+            $ref: "#/definitions/UserProfileResponse"
         "400":
-          description: Invalid Fields
+          description: Invalid fields
+        "401":
+          description: Unauthorized. Authentication is required to access the resource.
+        "498":
+          description: Token expired/invalid. The token has expired or is invalid.
+        "500":
+          description: Internal server error
+  /user/accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Accounts Module
+      summary: Get all user accounts
+      description: Retrieves all accounts associated with the authenticated user.
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Include the JWT Bearer token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Accounts retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Account"
+        "400":
+          description: Invalid parameters
+        "401":
+          description: Unauthorized. Authentication is required to access the resource.
+        "404":
+          description: No accounts found
+        "498":
+          description: Token expired/invalid. The token has expired or is invalid.
+        "500":
+          description: Internal server error
+  /user/accounts/{accountId}/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User Account Transactions
+      description: API for getting all transactions for the current month of a specific account
+      parameters:
+        - name: accountId
+          in: path
+          description: User's account ID (must be a positive integer)
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transactions retrieved successfully
+          schema:
+            $ref: "#/definitions/AllTransactionsResponse"
+        "400":
+          description: Bad request. The query syntax is incorrect.
+        "401":
+          description: Unauthorized. Authentication is required to access the resource.
+        "404":
+          description: No transactions found for this account
+        "498":
+          description: Token expired/invalid. The token has expired or is invalid.
+        "500":
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Fetch details of a transaction
+      description: API for getting a single transaction details
+      parameters:
+        - name: accountId
+          in: path
+          description: User's account ID (must be a positive integer)
+          required: true
+          type: integer
+        - name: transactionId
+          in: path
+          description: Transaction's ID (must be a positive integer)
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        "400":
+          description: Invalid transaction ID
+        "401":
+          description: Unauthorized. Authentication is required to access the resource.
+        "404":
+          description: Transaction not found
+        "498":
+          description: Token expired/invalid. The token has expired or is invalid.
+        "500":
+          description: Internal server error
+    patch:
+      tags:
+        - Transactions Module
+      summary: Update a transaction's category
+      description: API for updating a transaction's category
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: User's account ID (must be a positive integer)
+          required: true
+          type: integer
+        - name: transactionId
+          in: path
+          description: Transaction's ID (must be a positive integer)
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Update transaction's category and/or notes
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdate"
+      responses:
+        "200":
+          description: Transaction's category updated successfully
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        "400":
+          description: Bad request. The query syntax is incorrect.
+        "401":
+          description: Unauthorized. Authentication is required to access the resource.
+        "498":
+          description: Token expired/invalid. The token has expired or is invalid.
         "500":
           description: Internal Server Error
 securityDefinitions:
@@ -118,62 +282,205 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
-  User:
+  UserInfos:
+    type: object
     properties:
+      _id:
+        type: string
+        description: User id
       email:
         type: string
-        description: user email
-      password:
-        type: string
-        description: user password
+        description: User email
       firstName:
         type: string
-        description: user first name
+        description: User first name
       lastName:
         type: string
-        description: user last name
+        description: User last name
+      createdAt:
+        type: string
+        format: date-time
+        description: User creation date
+      updatedAt:
+        type: string
+        format: date-time
+        description: User update date
   Login:
+    type: object
     properties:
       email:
         type: string
-        description: user email
+        description: User email
       password:
         type: string
-        description: user password
-  ApiResponse:
+        description: User password
+  LoginResponse:
     type: object
     properties:
       status:
         type: integer
+        description: Status code of the response
       message:
         type: string
+        description: Message regarding the response
       body:
         type: object
         properties:
-          id:
+          token:
             type: string
-          email:
-            type: string
-  LoginResponse:
+            description: JWT token for authentication
+  SignUpRequest:
     type: object
     properties:
-      token:
+      email:
         type: string
-      user:
-        type: object
-        properties:
-          id:
-            type: string
-          email:
-            type: string
-          firstName:
-            type: string
-          lastName:
-            type: string
-  UserProfile:
+        description: User email
+      password:
+        type: string
+        description: User password
+      confirmPassword:
+        type: string
+        description: Password confirmation
+      firstName:
+        type: string
+        description: User first name
+      lastName:
+        type: string
+        description: User last name
+      terms:
+        type: boolean
+        description: User agreement to terms of service
+  SignUpResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Message regarding the response
+      body:
+        $ref: "#/definitions/UserCreatedResponse_body"
+  UserCreatedResponse_body:
+    type: object
+    properties:
+      __v:
+        type: integer
+        description: Version key (internal use)
+      _id:
+        type: string
+        description: User unique identifier
+      email:
+        type: string
+        description: User email
+      password:
+        type: string
+        description: Hashed password of the user
+      firstName:
+        type: string
+        description: User first name
+      lastName:
+        type: string
+        description: User last name
+      createdAt:
+        type: string
+        format: date-time
+        description: Date when the user was created
+      updatedAt:
+        type: string
+        format: date-time
+        description: Date when the user was last updated
+  UserProfileResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Message regarding the response
+      body:
+        $ref: "#/definitions/UserInfos"
+  UserUpdatedRequest:
     type: object
     properties:
       firstName:
         type: string
+        description: User first name
       lastName:
         type: string
+        description: User last name
+  Account:
+    type: object
+    properties:
+      accountId:
+        type: string
+        description: Unique identifier for the account
+      name:
+        type: string
+        description: Name of the account
+      balance:
+        type: number
+        description: Current balance of the account
+  Transaction:
+    type: object
+    properties:
+      transactionId:
+        type: integer
+        format: int64
+        description: Unique identifier for the transaction
+      date:
+        type: string
+        description: Date of the transaction
+      description:
+        type: string
+        description: Description of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      currency:
+        type: string
+        description: Currency of the transaction
+      type:
+        type: string
+        description: Type of transaction (e.g., debit, credit)
+      category:
+        type: string
+        description: Category of the transaction
+      notes:
+        type: string
+        description: Additional notes about the transaction
+  AllTransactionsResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Message regarding the response
+      body:
+        type: array
+        items:
+          $ref: "#/definitions/Transaction"
+        description: List of transactions
+  TransactionResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Message regarding the response
+      body:
+        $ref: "#/definitions/Transaction"
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Updated category of the transaction
+      notes:
+        type: string
+        description: Updated notes for the transaction

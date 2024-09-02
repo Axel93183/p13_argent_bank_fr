@@ -1,0 +1,486 @@
+swagger: "2.0"
+info:
+  title: Documentation API Bank Argent
+  description: Contient tous les points de terminaison API disponibles dans cette base de code
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+  - https
+paths:
+  /user/login:
+    post:
+      tags:
+        - Module Utilisateur
+      summary: Connexion
+      description: API pour se connecter. Renvoie un token JWT pour l'authentification.
+      parameters:
+        - in: body
+          name: body
+          description: Charge utile de connexion
+          required: true
+          schema:
+            $ref: "#/definitions/Login"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Connexion réussie
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        "400":
+          description: Champs invalides
+        "500":
+          description: Erreur interne du serveur
+  /user/signup:
+    post:
+      tags:
+        - Module Utilisateur
+      summary: Inscription
+      description: API pour s'inscrire.
+      parameters:
+        - in: body
+          name: body
+          description: Charge utile d'inscription
+          required: true
+          schema:
+            $ref: "#/definitions/SignUpRequest"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Inscription réussie
+          schema:
+            $ref: "#/definitions/SignUpResponse"
+        "400":
+          description: Champs invalides
+        "500":
+          description: Erreur interne du serveur
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Module Utilisateur
+      summary: Obtenir le profil utilisateur
+      description: API pour récupérer le profil de l'utilisateur authentifié.
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Inclure le token Bearer JWT
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Profil utilisateur récupéré avec succès
+          schema:
+            $ref: "#/definitions/UserProfileResponse"
+        "400":
+          description: Champs invalides
+        "401":
+          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+        "498":
+          description: Token expiré/invalide. Le token a expiré ou est invalide.
+        "500":
+          description: Erreur interne du serveur
+
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Module Utilisateur
+      summary: Mettre à jour le profil utilisateur
+      description: API pour mettre à jour le profil de l'utilisateur authentifié.
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Inclure le token Bearer JWT
+          required: true
+        - in: body
+          name: body
+          description: Attributs du profil utilisateur à mettre à jour
+          required: true
+          schema:
+            $ref: "#/definitions/UserUpdatedRequest"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Profil utilisateur mis à jour avec succès
+          schema:
+            $ref: "#/definitions/UserProfileResponse"
+        "400":
+          description: Champs invalides
+        "401":
+          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+        "498":
+          description: Token expiré/invalide. Le token a expiré ou est invalide.
+        "500":
+          description: Erreur interne du serveur
+  /user/accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Module Comptes
+      summary: Obtenir tous les comptes utilisateur
+      description: Récupère tous les comptes associés à l'utilisateur authentifié.
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Inclure le token Bearer JWT
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Comptes récupérés avec succès
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Account"
+        "400":
+          description: Paramètres invalides
+        "401":
+          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+        "404":
+          description: Aucun compte trouvé
+        "498":
+          description: Token expiré/invalide. Le token a expiré ou est invalide.
+        "500":
+          description: Erreur interne du serveur
+  /user/accounts/{accountId}/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Module Transactions
+      summary: Transactions du compte utilisateur
+      description: API pour obtenir toutes les transactions du mois en cours d'un compte spécifique
+      parameters:
+        - name: accountId
+          in: path
+          description: ID du compte de l'utilisateur (doit être un entier positif)
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          description: Inclure le token Bearer JWT
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transactions récupérées avec succès
+          schema:
+            $ref: "#/definitions/AllTransactionsResponse"
+        "400":
+          description: Mauvaise requête. La syntaxe de la requête est incorrecte.
+        "401":
+          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+        "404":
+          description: Aucune transaction trouvée pour ce compte
+        "498":
+          description: Token expiré/invalide. Le token a expiré ou est invalide.
+        "500":
+          description: Erreur interne du serveur
+  /user/accounts/{accountId}/transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Module Transactions
+      summary: Obtenir les détails d'une transaction
+      description: API pour obtenir les détails d'une seule transaction
+      parameters:
+        - name: accountId
+          in: path
+          description: ID du compte de l'utilisateur (doit être un entier positif)
+          required: true
+          type: integer
+        - name: transactionId
+          in: path
+          description: ID de la transaction (doit être un entier positif)
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          description: Inclure le token Bearer JWT
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Détails de la transaction récupérés avec succès
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        "400":
+          description: ID de transaction invalide
+        "401":
+          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+        "404":
+          description: Transaction non trouvée
+        "498":
+          description: Token expiré/invalide. Le token a expiré ou est invalide.
+        "500":
+          description: Erreur interne du serveur
+    patch:
+      tags:
+        - Module Transactions
+      summary: Mettre à jour la catégorie d'une transaction
+      description: API pour mettre à jour la catégorie d'une transaction
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: ID du compte de l'utilisateur (doit être un entier positif)
+          required: true
+          type: integer
+        - name: transactionId
+          in: path
+          description: ID de la transaction (doit être un entier positif)
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          description: Inclure le token Bearer JWT
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Mettre à jour la catégorie et/ou les notes de la transaction
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdate"
+      responses:
+        "200":
+          description: Catégorie de la transaction mise à jour avec succès
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        "400":
+          description: Mauvaise requête. La syntaxe de la requête est incorrecte.
+        "401":
+          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+        "498":
+          description: Token expiré/invalide. Le token a expiré ou est invalide.
+        "500":
+          description: Erreur interne du serveur
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  UserInfos:
+    type: object
+    properties:
+      _id:
+        type: string
+        description: ID de l'utilisateur
+      email:
+        type: string
+        description: Email de l'utilisateur
+      firstName:
+        type: string
+        description: Prénom de l'utilisateur
+      lastName:
+        type: string
+        description: Nom de famille de l'utilisateur
+      createdAt:
+        type: string
+        format: date-time
+        description: Date de création de l'utilisateur
+      updatedAt:
+        type: string
+        format: date-time
+        description: Date de mise à jour de l'utilisateur
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email de l'utilisateur
+      password:
+        type: string
+        description: Mot de passe de l'utilisateur
+  LoginResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Code de statut de la réponse
+      message:
+        type: string
+        description: Message concernant la réponse
+      body:
+        type: object
+        properties:
+          token:
+            type: string
+            description: Token JWT pour l'authentification
+  SignUpRequest:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email de l'utilisateur
+      password:
+        type: string
+        description: Mot de passe de l'utilisateur
+      confirmPassword:
+        type: string
+        description: Confirmation du mot de passe
+      firstName:
+        type: string
+        description: Prénom de l'utilisateur
+      lastName:
+        type: string
+        description: Nom de famille de l'utilisateur
+      terms:
+        type: boolean
+        description: Accord de l'utilisateur aux conditions de service
+  SignUpResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Code de statut de la réponse
+      message:
+        type: string
+        description: Message concernant la réponse
+      body:
+        $ref: "#/definitions/UserCreatedResponse_body"
+  UserCreatedResponse_body:
+    type: object
+    properties:
+      __v:
+        type: integer
+        description: Clé de version (utilisation interne)
+      _id:
+        type: string
+        description: Identifiant unique de l'utilisateur
+      email:
+        type: string
+        description: Email de l'utilisateur
+      password:
+        type: string
+        description: Mot de passe haché de l'utilisateur
+      firstName:
+        type: string
+        description: Prénom de l'utilisateur
+      lastName:
+        type: string
+        description: Nom de famille de l'utilisateur
+      createdAt:
+        type: string
+        format: date-time
+        description: Date de création de l'utilisateur
+      updatedAt:
+        type: string
+        format: date-time
+        description: Date de dernière mise à jour de l'utilisateur
+  UserProfileResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Code de statut de la réponse
+      message:
+        type: string
+        description: Message concernant la réponse
+      body:
+        $ref: "#/definitions/UserInfos"
+  UserUpdatedRequest:
+    type: object
+    properties:
+      firstName:
+        type: string
+        description: Prénom de l'utilisateur
+      lastName:
+        type: string
+        description: Nom de famille de l'utilisateur
+  Account:
+    type: object
+    properties:
+      accountId:
+        type: string
+        description: Identifiant unique du compte
+      name:
+        type: string
+        description: Nom du compte
+      balance:
+        type: number
+        description: Solde actuel du compte
+  Transaction:
+    type: object
+    properties:
+      transactionId:
+        type: integer
+        format: int64
+        description: Identifiant unique de la transaction
+      date:
+        type: string
+        description: Date de la transaction
+      description:
+        type: string
+        description: Description de la transaction
+      amount:
+        type: number
+        description: Montant de la transaction
+      currency:
+        type: string
+        description: Devise de la transaction
+      type:
+        type: string
+        description: Type de la transaction (par exemple, débit, crédit)
+      category:
+        type: string
+        description: Catégorie de la transaction
+      notes:
+        type: string
+        description: Notes supplémentaires sur la transaction
+  AllTransactionsResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Code de statut de la réponse
+      message:
+        type: string
+        description: Message concernant la réponse
+      body:
+        type: array
+        items:
+          $ref: "#/definitions/Transaction"
+        description: Liste des transactions
+  TransactionResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Code de statut de la réponse
+      message:
+        type: string
+        description: Message concernant la réponse
+      body:
+        $ref: "#/definitions/Transaction"
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Catégorie mise à jour de la transaction
+      notes:
+        type: string
+        description: Notes mises à jour pour la transaction
