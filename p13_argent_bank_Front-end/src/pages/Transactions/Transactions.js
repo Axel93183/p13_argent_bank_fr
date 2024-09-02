@@ -1,33 +1,32 @@
 import React from "react";
-
+import { useLocation } from "react-router-dom";
 import Account from "../../components/Account/Account";
 import CollapseContent from "../../components/Transactions/CollapseContent/CollapseContent";
 import CollapseTransactions from "../../components/Transactions/CollapseTransactions/CollapseTransactions";
-
 import "./Transactions.css";
 
-/**
- * Transactions component.
- * Renders the transactions page with header, main content, and footer.
- * Displays an account summary without the "View transactions" button.
- * @returns {JSX.Element} Transactions component.
- */
-
 const Transactions = () => {
+  const location = useLocation();
+  const { account } = location.state || {};
+
+  if (!account) {
+    return <div>No account selected</div>;
+  }
+
   return (
     <div className="transactions-container">
       <main className="main bg-dark">
         <h2 className="sr-only">Transactions</h2>
         <Account
-          title="Argent Bank Checking (x8349)"
-          amount="$2,082.79"
-          description="Available Balance"
+          title={account.title}
+          amount={account.amount}
+          description={account.description}
           className="transactions-page-header"
           showButton={false}
         />
         <section className="transactions-array">
           <CollapseTransactions
-            date="01/01/2023"
+            date="03/01/2023"
             description="Description 1"
             amount="$50.00"
             balance="$2,032.79"
@@ -38,13 +37,14 @@ const Transactions = () => {
             description="Description 2"
             amount="$30.00"
             balance="$2,002.79"
+            content={<CollapseContent category="" notes="" />}
           />
           <CollapseTransactions
-            date="03/01/2023"
+            date="01/01/2023"
             description="Description 3"
             amount="$20.00"
             balance="$1,982.79"
-            content={<CollapseContent category="Travel" notes="Another note" />}
+            content={<CollapseContent category="" notes="" />}
           />
         </section>
       </main>

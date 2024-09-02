@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 import Page404 from "./pages/Page404/Page404";
 import SignUp from "./pages/SignUp/SignUp";
 import User from "./pages/User/User";
+import Transactions from "./pages/Transactions/Transactions";
 
 /**
  * App component that handles the routing and layout of the application.
@@ -34,6 +35,10 @@ const App = () => {
           <Route
             path="/user"
             element={isLoggedIn ? <User /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/transactions"
+            element={isLoggedIn ? <Transactions /> : <Navigate to="/login" />}
           />
           <Route path="*" element={<Page404 />} />
         </Routes>
