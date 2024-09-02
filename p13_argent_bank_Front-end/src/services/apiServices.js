@@ -142,6 +142,28 @@ export const getUserProfile = async (token) => {
   }
 };
 
+/**
+ * Updates user profile information using the provided authentication token and new user data.
+ *
+ * This function sends a PUT request to the `/user/profile` endpoint with an authorization token and updated user data.
+ *
+ * @param {string} token - The authentication token used to authorize the request.
+ * @param {Object} userData - The updated user data to be sent.
+ * @param {string} [userData.email] - The updated email of the user (optional).
+ * @param {string} [userData.password] - The updated password of the user (optional).
+ * @param {string} [userData.username] - The updated username of the user (optional).
+ *
+ * @returns {Promise<Object>} A promise that resolves to the JSON response from the API, typically containing updated user profile information.
+ *
+ * @throws {Error} Throws an error if the update request fails or the response is not successful.
+ *
+ * @example
+ * const token = 'your-authentication-token';
+ * const updatedUserData = { email: 'newemail@example.com', username: 'newusername' };
+ * updateUserProfile(token, updatedUserData)
+ *   .then(data => console.log('User profile updated successfully:', data))
+ *   .catch(error => console.error('Failed to update user profile:', error));
+ */
 export const updateUserProfile = async (token, userData) => {
   try {
     const response = await fetch(`${BASE_URL}/user/profile`, {

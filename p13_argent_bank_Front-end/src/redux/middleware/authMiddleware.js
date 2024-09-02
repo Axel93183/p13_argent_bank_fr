@@ -19,6 +19,30 @@ import {
   updateLastName,
 } from "../slices/authSlice";
 
+/**
+ * Middleware for handling authentication-related actions in Redux.
+ *
+ * This middleware intercepts authentication actions, performs the necessary API calls, and dispatches subsequent actions based on the results.
+ * It handles:
+ * - **Login**: Initiates login request, fetches user profile, and manages tokens and user data.
+ * - **Signup**: Initiates signup request and handles success or failure.
+ * - **Update Profile**: Updates user profile information and dispatches actions for first and last name updates.
+ * - **Fetch Profile**: Fetches user profile information based on the provided token.
+ *
+ * @param {Object} store - Redux store object.
+ * @param {Function} store.dispatch - Dispatch function to send actions.
+ * @param {Function} next - Next middleware in the chain.
+ * @param {Function} action - The dispatched action.
+ * 
+ * @returns {Function} The next middleware or final action.
+ * 
+ * @example
+ * dispatch({ type: 'user/login', payload: { email: 'user@example.com', password: 'password123', rememberMe: true } });
+ * dispatch({ type: 'user/signup', payload: { email: 'newuser@example.com', password: 'password123' } });
+ * dispatch({ type: 'user/updateProfile', payload: { token: 'your-token', userData: { firstName: 'NewName' } } });
+ * dispatch({ type: 'user/fetchProfile', payload: { token: 'your-token' } });
+ */
+
 const authMiddleware =
   ({ dispatch }) =>
   (next) =>

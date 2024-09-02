@@ -6,11 +6,12 @@ import "./CollapseContent.css";
 /**
  * CollapseContent component.
  * Displays and allows editing of transaction details such as type, category, and notes.
+ *
  * @param {Object} props - Component properties.
- * @param {string} [props.transactionType="Electronic"] - The type of transaction.
+ * @param {string} [props.transactionType="Electronic"] - The type of transaction. Defaults to "Electronic".
  * @param {string} props.category - The current category of the transaction.
- * @param {string} [props.notes=""] - Initial notes for the transaction.
- * @returns {JSX.Element} CollapseContent component.
+ * @param {string} [props.notes=""] - Initial notes for the transaction. Defaults to an empty string.
+ * @returns {JSX.Element} The rendered CollapseContent component.
  */
 
 const CollapseContent = ({

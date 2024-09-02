@@ -2,6 +2,13 @@ import React from "react";
 import argentBankLogo from "../../assets/logo/argentBankLogo.png";
 import "./Logo.css";
 
+/**
+ * Logo component.
+ * Renders the Argent Bank logo as a clickable link to the homepage.
+ *
+ * @returns {JSX.Element} The rendered Logo component.
+ */
+
 const Logo = () => {
   return (
     <a className="main-nav-logo" href="/">

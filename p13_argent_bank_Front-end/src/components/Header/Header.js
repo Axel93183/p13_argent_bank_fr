@@ -13,13 +13,15 @@ import {
 import "./Header.css";
 
 /**
- * Header component that provides navigation links and handles user authentication state.
+ * Header component.
+ * Provides navigation links and user authentication options, including login and logout functionalities.
  *
- * This component displays a navigation bar with a logo and user-related actions. If the user is logged in,
- * it shows their first name with a link to the user page and a sign-out button. If not logged in, it shows a login link.
- * The sign-out action triggers a logout and redirects the user to the login page.
+ * This component renders a navigation bar with the Argent Bank logo and user-related navigation items. If the user is logged in,
+ * it displays their first name with a link to the user page and a sign-out button. If the user is not logged in, it shows a login link.
+ * The sign-out button triggers a logout action and redirects the user to the login page.
  *
- * @component
+ * @param {Object} props - Component properties.
+ * @param {boolean} props.isLoggedIn - Indicates if the user is currently logged in.
  * @returns {JSX.Element} The rendered Header component with navigation and user options.
  */
 

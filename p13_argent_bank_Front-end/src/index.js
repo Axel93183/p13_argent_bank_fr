@@ -12,9 +12,9 @@ import reportWebVitals from "./reportWebVitals";
  * Renders the `App` component inside a `Provider` to connect the Redux store to the React application.
  * Applies global styles from `index.css` and sets up performance measurement with `reportWebVitals`.
  *
- * @returns {void}
+ * @function
+ * @returns {void} This function does not return a value.
  */
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

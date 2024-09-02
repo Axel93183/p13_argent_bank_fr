@@ -9,8 +9,15 @@ import "./Login.css";
 
 /**
  * Login component.
- * Renders the login page with a form for user login.
- * @returns {JSX.Element} Login component.
+ *
+ * Renders the login page, including a form for user login.
+ * Displays an icon and heading, followed by the `LoginForm` component for user authentication.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered `Login` component, including a login form and page styling.
+ *
+ * @example
+ * <Login />
  */
 
 const Login = () => {

@@ -8,13 +8,14 @@ import "./CollapseTransactions.css";
 /**
  * CollapseTransactions component.
  * Displays a collapsible section for transaction details with a toggle feature.
+ *
  * @param {Object} props - Component properties.
  * @param {string} props.date - Transaction date.
  * @param {string} props.description - Description of the transaction.
  * @param {string} props.amount - Transaction amount.
  * @param {string} props.balance - Balance after the transaction.
  * @param {JSX.Element} props.content - Additional content to display when the section is expanded.
- * @returns {JSX.Element} CollapseTransactions component.
+ * @returns {JSX.Element} The rendered CollapseTransactions component.
  */
 
 const CollapseTransactions = ({

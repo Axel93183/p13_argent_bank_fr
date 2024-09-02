@@ -1,9 +1,16 @@
 import "./Page404.css";
 
 /**
- * Error404 is a component that displays a 404 error message to the user.
- * It includes a `Link` component to allow the user to return to the homepage.
- * @return {ReactElement} The JS markup for the Error404 component
+ * Page404 component.
+ *
+ * Displays a 404 error message indicating that the requested page does not exist.
+ * Includes a link for the user to return to the homepage.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered `Page404` component with an error message and homepage link.
+ *
+ * @example
+ * <Page404 />
  */
 
 const Page404 = () => {

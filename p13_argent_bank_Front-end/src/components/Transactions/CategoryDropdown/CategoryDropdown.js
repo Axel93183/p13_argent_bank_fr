@@ -5,10 +5,11 @@ import "./CategoryDropdown.css";
 /**
  * CategoryDropdown component.
  * Renders a dropdown menu for selecting a category from a predefined list.
+ *
  * @param {Object} props - Component properties.
  * @param {string} props.selectedCategory - The currently selected category.
  * @param {Function} props.onCategoryChange - Callback function to handle category changes.
- * @returns {JSX.Element} CategoryDropdown component.
+ * @returns {JSX.Element} The rendered CategoryDropdown component.
  */
 
 const CategoryDropdown = ({ selectedCategory, onCategoryChange }) => {

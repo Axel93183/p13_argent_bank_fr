@@ -10,9 +10,11 @@ import "./SignUpForm.css";
 
 /**
  * SignUpForm component.
- * Renders a sign-in form with fields for email, password, confirm password, first name, last name, and terms agreement.
- * Handles form submission and logs form data to the console.
- * @returns {JSX.Element} SignUpForm component.
+ * Renders a form for user registration with fields for email, password, confirm password, first name, last name, and terms agreement.
+ * Handles form submission, validation, and displays success or error messages.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered SignUpForm component with input fields and submission logic.
  */
 
 const SignUpForm = () => {

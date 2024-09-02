@@ -10,8 +10,15 @@ import "./Home.css";
 
 /**
  * Home component.
- * Renders the home page with header, banner, features, and footer.
- * @returns {JSX.Element} Home component.
+ *
+ * Renders the home page, including a banner and a section of features with corresponding icons and descriptions.
+ * The features highlight key aspects such as priority customer support, savings rates, and security.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered `Home` component, featuring a banner and a list of key features with icons and descriptions.
+ *
+ * @example
+ * <Home />
  */
 
 const Home = () => {

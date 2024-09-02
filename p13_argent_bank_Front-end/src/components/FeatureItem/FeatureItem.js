@@ -3,11 +3,12 @@ import "./FeatureItem.css";
 /**
  * FeatureItem component.
  * Renders a feature item with an icon, title, and description.
- * @param {Object} props - Component props.
+ *
+ * @param {Object} props - Component properties.
  * @param {string} props.icon - The URL of the icon image.
  * @param {string} props.title - The title of the feature.
  * @param {string} props.description - The description of the feature.
- * @returns {JSX.Element} FeatureItem component.
+ * @returns {JSX.Element} The rendered FeatureItem component.
  */
 
 const FeatureItem = ({ icon, title, description }) => {

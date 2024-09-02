@@ -4,10 +4,31 @@ import Account from "../../components/Account/Account";
 import AccountHeader from "../../components/AccountHeader/AccountHeader";
 import "./User.css";
 
+/**
+ * User component displaying the user's account information and handling navigation.
+ *
+ * This component shows a list of the user's accounts with their balances and provides navigation to the transactions page.
+ * It uses the `useNavigate` hook from `react-router-dom` to handle route changes.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered `User` component with account details and navigation functionality.
+ *
+ * @example
+ * <User />
+ */
+
 const User = () => {
   const navigate = useNavigate();
 
-  const handleViewTransactions = (account) => {
+   /**
+   * Handles navigation to the transactions page with the selected account information.
+   *
+   * @param {Object} account - The account object containing details to be passed to the transactions page.
+   * @param {string} account.title - The title of the account.
+   * @param {string} account.amount - The current balance of the account.
+   * @param {string} account.description - A description of the account balance.
+   */
+    const handleViewTransactions = (account) => {
     navigate("/transactions", { state: { account } });
   };
 

@@ -9,8 +9,15 @@ import "./SignUp.css";
 
 /**
  * SignUp component.
- * Renders the sign-in page with a form to create a new user account.
- * @returns {JSX.Element} SignUp component.
+ *
+ * Renders the sign-up page, including a user registration form.
+ * Displays an icon and heading, followed by the `SignUpForm` component for creating a new user account.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered `SignUp` component, including a sign-up form and page styling.
+ *
+ * @example
+ * <SignUp />
  */
 
 const SignUp = () => {

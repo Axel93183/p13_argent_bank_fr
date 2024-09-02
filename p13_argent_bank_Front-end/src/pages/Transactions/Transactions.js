@@ -5,6 +5,19 @@ import CollapseContent from "../../components/Transactions/CollapseContent/Colla
 import CollapseTransactions from "../../components/Transactions/CollapseTransactions/CollapseTransactions";
 import "./Transactions.css";
 
+/**
+ * Transactions component that displays the transaction history for a selected account.
+ *
+ * This component retrieves the selected account information from the route state using `useLocation` from `react-router-dom`.
+ * It displays account details and lists recent transactions with collapsible content for each transaction.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered `Transactions` component showing account details and transaction history.
+ *
+ * @example
+ * <Transactions />
+ */
+
 const Transactions = () => {
   const location = useLocation();
   const { account } = location.state || {};

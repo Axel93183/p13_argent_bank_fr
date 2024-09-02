@@ -5,6 +5,16 @@ import Form from "../Forms/Form/Form";
 import FormField from "../Forms/FormField/FormField";
 import "./AccountHeader.css";
 
+/**
+ * AccountHeader component.
+ * Displays the user's account header with a welcome message and the option to edit their name.
+ *
+ * This component shows the user's first and last name and provides a button to toggle the display of a form for updating their name.
+ * When the form is shown, users can input new names and either save or cancel the changes.
+ *
+ * @returns {JSX.Element} The rendered AccountHeader component with name editing functionality.
+ */
+
 const AccountHeader = () => {
   const dispatch = useDispatch();
 

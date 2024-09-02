@@ -1,8 +1,10 @@
 import "./Footer.css";
 
 /**
- * Footer component
- * @returns {JSX.Element} Footer Component
+ * Footer component.
+ * Renders a footer with a copyright notice.
+ *
+ * @returns {JSX.Element} The rendered Footer component.
  */
 
 const Footer = () => {

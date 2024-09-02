@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { updateUserProfileThunk } from "./authThunks";
 
 /**
  * Redux slice for managing user authentication state.
@@ -24,22 +23,27 @@ import { createSlice } from "@reduxjs/toolkit";
  * @property {boolean} isSignUpSuccessful - Indicates if the signup process was successful.
  *
  * @returns {Object} The slice containing the reducers and actions for managing authentication state.
- * @property {Function} login - Action to initiate login and set loading state.
+ * @property {Function} loginRequest - Action to initiate login and set loading state.
  * @property {Function} loginSuccess - Action to handle successful login.
  * @property {Function} loginFailure - Action to handle login failure.
+ * @property {Function} fetchUserProfileRequest - Action to initiate fetching user profile.
  * @property {Function} fetchUserProfileSuccess - Action to handle successful user profile fetch.
  * @property {Function} fetchUserProfileFailure - Action to handle user profile fetch failure.
- * @property {Function} signup - Action to initiate signup and set loading state.
+ * @property {Function} signupRequest - Action to initiate signup and set loading state.
  * @property {Function} signupSuccess - Action to handle successful signup.
  * @property {Function} signupFailure - Action to handle signup failure.
+ * @property {Function} clearFieldError - Action to clear specific field errors.
  * @property {Function} logout - Action to handle user logout.
+ * @property {Function} updateFirstName - Action to update the user's first name.
+ * @property {Function} updateLastName - Action to update the user's last name.
+ * @property {Function} updateDataFailure - Action to handle failure in updating user data.
  *
  * @example
  * Dispatch login action
- * dispatch(login({ email: 'user@example.com', password: 'password123' }));
+ * dispatch(loginRequest({ email: 'user@example.com', password: 'password123' }));
  *
  * Dispatch signup action
- * dispatch(signup({ email: 'user@example.com', password: 'password123' }));
+ * dispatch(signupRequest({ email: 'user@example.com', password: 'password123' }));
  */
 
 const initialState = {
@@ -76,7 +80,6 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
     },
     loginFailure: (state, action) => {
-      console.log("Reducer loginFailure called with", action.payload);
       state.loading = false;
       state.error = action.payload.error;
     },
@@ -102,7 +105,6 @@ const authSlice = createSlice({
       state.isSignUpSuccessful = true;
     },
     signupFailure: (state, action) => {
-      console.log("Reducer signupFailure called with", action.payload);
       state.loading = false;
       state.error = action.payload.error;
       state.isSignUpSuccessful = false;

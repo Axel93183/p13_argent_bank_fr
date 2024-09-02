@@ -1,8 +1,10 @@
 import "./Banner.css";
 
 /**
- * Banner Component
- * @returns {JSX.Element} Banner Component
+ * Banner component.
+ * Renders a promotional banner with key selling points and a call to action.
+ *
+ * @returns {JSX.Element} The rendered Banner component with promotional content.
  */
 
 const Banner = () => {
