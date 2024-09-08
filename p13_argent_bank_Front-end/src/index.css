@@ -36,7 +36,6 @@ img {
 }
 
 .error-message {
-  margin: 5px 0;
-  font-size: 0.8rem;
+  font-size: 1em;
   color: #fa2a2a;
 }

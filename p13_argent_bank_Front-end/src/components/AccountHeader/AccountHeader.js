@@ -27,6 +27,7 @@ const AccountHeader = () => {
   }, [dispatch, token]);
 
   const { firstName, lastName } = useSelector((state) => state.user.user);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [displayFirstName, setDisplayFirstName] = useState(firstName);
   const [displayLastName, setDisplayLastName] = useState(lastName);
@@ -62,6 +63,11 @@ const AccountHeader = () => {
   };
 
   const handleSave = () => {
+    if (!newFirstName.trim() || !newLastName.trim()) {
+      setErrorMessage("Fields cannot be empty.");
+      return;
+    }
+
     dispatch({
       type: "user/updateProfile",
       payload: {
@@ -106,6 +112,7 @@ const AccountHeader = () => {
                 required={false}
               />
             </div>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <div className="edit-name-bottom-container">
               <Button type="submit" text="Save" className="edit-button" />
               <Button
