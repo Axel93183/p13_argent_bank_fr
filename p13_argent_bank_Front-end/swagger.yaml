@@ -82,9 +82,7 @@ paths:
         "400":
           description: Invalid fields
         "401":
-          description: Unauthorized. Authentication is required to access the resource.
-        "498":
-          description: Token expired/invalid. The token has expired or is invalid.
+          description: Unauthorized. Authentication is required to access the resource. Token expired or invalid.
         "500":
           description: Internal server error
 
@@ -117,19 +115,17 @@ paths:
         "400":
           description: Invalid fields
         "401":
-          description: Unauthorized. Authentication is required to access the resource.
-        "498":
-          description: Token expired/invalid. The token has expired or is invalid.
+          description: Unauthorized. Authentication is required to access the resource. Token expired or invalid.
         "500":
           description: Internal server error
-  /user/accounts:
+  /user/account:
     get:
       security:
         - Bearer: []
       tags:
         - Accounts Module
       summary: Get all user accounts
-      description: Retrieves all accounts associated with the authenticated user.
+      description: API for getting all accounts associated with the authenticated user.
       parameters:
         - in: header
           type: string
@@ -144,24 +140,22 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Account"
+              $ref: "#/definitions/AccountResponse"
         "400":
           description: Invalid parameters
         "401":
-          description: Unauthorized. Authentication is required to access the resource.
+          description: Unauthorized. Authentication is required to access the resource. Token expired or invalid.
         "404":
           description: No accounts found
-        "498":
-          description: Token expired/invalid. The token has expired or is invalid.
         "500":
           description: Internal server error
-  /user/accounts/{accountId}/transactions:
+  /user/account/{accountId}/transaction:
     get:
       security:
         - Bearer: []
       tags:
         - Transactions Module
-      summary: User Account Transactions
+      summary: Get User Account Transactions
       description: API for getting all transactions for the current month of a specific account
       parameters:
         - name: accountId
@@ -184,14 +178,12 @@ paths:
         "400":
           description: Bad request. The query syntax is incorrect.
         "401":
-          description: Unauthorized. Authentication is required to access the resource.
+          description: Unauthorized. Authentication is required to access the resource. Token expired or invalid.
         "404":
-          description: No transactions found for this account
-        "498":
-          description: Token expired/invalid. The token has expired or is invalid.
+          description: Account not found
         "500":
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionId}:
+  /user/account/{accountId}/transaction/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -225,11 +217,9 @@ paths:
         "400":
           description: Invalid transaction ID
         "401":
-          description: Unauthorized. Authentication is required to access the resource.
+          description: Unauthorized. Authentication is required to access the resource. Token expired or invalid.
         "404":
           description: Transaction not found
-        "498":
-          description: Token expired/invalid. The token has expired or is invalid.
         "500":
           description: Internal server error
     patch:
@@ -271,9 +261,7 @@ paths:
         "400":
           description: Bad request. The query syntax is incorrect.
         "401":
-          description: Unauthorized. Authentication is required to access the resource.
-        "498":
-          description: Token expired/invalid. The token has expired or is invalid.
+          description: Unauthorized. Authentication is required to access the resource. Token expired or invalid.
         "500":
           description: Internal Server Error
 securityDefinitions:
@@ -282,7 +270,7 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
-  UserInfos:
+  UserInfo:
     type: object
     properties:
       _id:
@@ -400,7 +388,7 @@ definitions:
         type: string
         description: Message regarding the response
       body:
-        $ref: "#/definitions/UserInfos"
+        $ref: "#/definitions/UserInfo"
   UserUpdatedRequest:
     type: object
     properties:
@@ -422,6 +410,17 @@ definitions:
       balance:
         type: number
         description: Current balance of the account
+  AccountResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Message regarding the response
+      body:
+        $ref: "#/definitions/Account"
   Transaction:
     type: object
     properties:

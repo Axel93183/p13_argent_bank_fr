@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: Documentation API Bank Argent
+  title: Documentation de l'API Bank Argent
   description: Contient tous les points de terminaison API disponibles dans cette base de code
   version: "1.0.0"
   termsOfService: "http://swagger.io/terms/"
@@ -15,11 +15,11 @@ paths:
       tags:
         - Module Utilisateur
       summary: Connexion
-      description: API pour se connecter. Renvoie un token JWT pour l'authentification.
+      description: API pour se connecter. Renvoie un jeton JWT pour l'authentification.
       parameters:
         - in: body
           name: body
-          description: Charge utile de connexion
+          description: Données de connexion
           required: true
           schema:
             $ref: "#/definitions/Login"
@@ -43,7 +43,7 @@ paths:
       parameters:
         - in: body
           name: body
-          description: Charge utile d'inscription
+          description: Données d'inscription
           required: true
           schema:
             $ref: "#/definitions/SignUpRequest"
@@ -64,13 +64,13 @@ paths:
         - Bearer: []
       tags:
         - Module Utilisateur
-      summary: Obtenir le profil utilisateur
+      summary: Récupérer le profil de l'utilisateur
       description: API pour récupérer le profil de l'utilisateur authentifié.
       parameters:
         - in: header
           type: string
           name: Authorization
-          description: Inclure le token Bearer JWT
+          description: Inclure le jeton Bearer JWT
           required: true
       produces:
         - application/json
@@ -82,9 +82,7 @@ paths:
         "400":
           description: Champs invalides
         "401":
-          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
-        "498":
-          description: Token expiré/invalide. Le token a expiré ou est invalide.
+          description: Non autorisé. Authentification requise. Jeton expiré ou invalide.
         "500":
           description: Erreur interne du serveur
 
@@ -93,13 +91,13 @@ paths:
         - Bearer: []
       tags:
         - Module Utilisateur
-      summary: Mettre à jour le profil utilisateur
+      summary: Mettre à jour le profil de l'utilisateur
       description: API pour mettre à jour le profil de l'utilisateur authentifié.
       parameters:
         - in: header
           type: string
           name: Authorization
-          description: Inclure le token Bearer JWT
+          description: Inclure le jeton Bearer JWT
           required: true
         - in: body
           name: body
@@ -117,24 +115,22 @@ paths:
         "400":
           description: Champs invalides
         "401":
-          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
-        "498":
-          description: Token expiré/invalide. Le token a expiré ou est invalide.
+          description: Non autorisé. Authentification requise. Jeton expiré ou invalide.
         "500":
           description: Erreur interne du serveur
-  /user/accounts:
+  /user/account:
     get:
       security:
         - Bearer: []
       tags:
         - Module Comptes
-      summary: Obtenir tous les comptes utilisateur
-      description: Récupère tous les comptes associés à l'utilisateur authentifié.
+      summary: Récupérer tous les comptes utilisateur
+      description: API pour récupérer tous les comptes associés à l'utilisateur authentifié.
       parameters:
         - in: header
           type: string
           name: Authorization
-          description: Inclure le token Bearer JWT
+          description: Inclure le jeton Bearer JWT
           required: true
       produces:
         - application/json
@@ -144,34 +140,32 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Account"
+              $ref: "#/definitions/AccountResponse"
         "400":
           description: Paramètres invalides
         "401":
-          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+          description: Non autorisé. Authentification requise. Jeton expiré ou invalide.
         "404":
           description: Aucun compte trouvé
-        "498":
-          description: Token expiré/invalide. Le token a expiré ou est invalide.
         "500":
           description: Erreur interne du serveur
-  /user/accounts/{accountId}/transactions:
+  /user/account/{accountId}/transaction:
     get:
       security:
         - Bearer: []
       tags:
         - Module Transactions
-      summary: Transactions du compte utilisateur
-      description: API pour obtenir toutes les transactions du mois en cours d'un compte spécifique
+      summary: Obtenir toute les transactions du compte utilisateur
+      description: API pour obtenir toutes les transactions du mois en cours pour un compte spécifique
       parameters:
         - name: accountId
           in: path
-          description: ID du compte de l'utilisateur (doit être un entier positif)
+          description: ID du compte utilisateur (doit être un entier positif)
           required: true
           type: integer
         - name: Authorization
           in: header
-          description: Inclure le token Bearer JWT
+          description: Attacher le jeton JWT Bearer
           required: true
           type: string
       produces:
@@ -182,27 +176,25 @@ paths:
           schema:
             $ref: "#/definitions/AllTransactionsResponse"
         "400":
-          description: Mauvaise requête. La syntaxe de la requête est incorrecte.
+          description: Requête incorrecte. La syntaxe de la requête est incorrecte.
         "401":
-          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+          description: Non autorisé. Authentification requise. Jeton expiré ou invalide.
         "404":
-          description: Aucune transaction trouvée pour ce compte
-        "498":
-          description: Token expiré/invalide. Le token a expiré ou est invalide.
+          description: Compte non trouvé
         "500":
           description: Erreur interne du serveur
-  /user/accounts/{accountId}/transactions/{transactionId}:
+  /user/account/{accountId}/transaction/{transactionId}:
     get:
       security:
         - Bearer: []
       tags:
         - Module Transactions
-      summary: Obtenir les détails d'une transaction
-      description: API pour obtenir les détails d'une seule transaction
+      summary: Récupérer les détails d'une transaction
+      description: API pour obtenir les détails d'une transaction unique
       parameters:
         - name: accountId
           in: path
-          description: ID du compte de l'utilisateur (doit être un entier positif)
+          description: ID du compte utilisateur (doit être un entier positif)
           required: true
           type: integer
         - name: transactionId
@@ -212,7 +204,7 @@ paths:
           type: integer
         - name: Authorization
           in: header
-          description: Inclure le token Bearer JWT
+          description: Attacher le jeton JWT Bearer
           required: true
           type: string
       produces:
@@ -225,18 +217,16 @@ paths:
         "400":
           description: ID de transaction invalide
         "401":
-          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
+          description: Non autorisé. Authentification requise. Jeton expiré ou invalide.
         "404":
           description: Transaction non trouvée
-        "498":
-          description: Token expiré/invalide. Le token a expiré ou est invalide.
         "500":
           description: Erreur interne du serveur
     patch:
       tags:
         - Module Transactions
-      summary: Mettre à jour la catégorie d'une transaction
-      description: API pour mettre à jour la catégorie d'une transaction
+      summary: Mettre à jour la catégorie et/ou les notes d'une transaction
+      description: API pour mettre à jour la catégorie et/ou les notes d'une transaction
       consumes:
         - application/json
       produces:
@@ -244,7 +234,7 @@ paths:
       parameters:
         - name: accountId
           in: path
-          description: ID du compte de l'utilisateur (doit être un entier positif)
+          description: ID du compte utilisateur (doit être un entier positif)
           required: true
           type: integer
         - name: transactionId
@@ -254,7 +244,7 @@ paths:
           type: integer
         - name: Authorization
           in: header
-          description: Inclure le token Bearer JWT
+          description: Attacher le jeton JWT Bearer
           required: true
           type: string
         - in: body
@@ -269,11 +259,9 @@ paths:
           schema:
             $ref: "#/definitions/TransactionResponse"
         "400":
-          description: Mauvaise requête. La syntaxe de la requête est incorrecte.
+          description: Requête incorrecte. La syntaxe de la requête est incorrecte.
         "401":
-          description: Non autorisé. L'authentification est requise pour accéder à la ressource.
-        "498":
-          description: Token expiré/invalide. Le token a expiré ou est invalide.
+          description: Non autorisé. Authentification requise. Jeton expiré ou invalide.
         "500":
           description: Erreur interne du serveur
 securityDefinitions:
@@ -282,7 +270,7 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
-  UserInfos:
+  UserInfo:
     type: object
     properties:
       _id:
@@ -328,7 +316,7 @@ definitions:
         properties:
           token:
             type: string
-            description: Token JWT pour l'authentification
+            description: Jeton JWT pour l'authentification
   SignUpRequest:
     type: object
     properties:
@@ -349,7 +337,7 @@ definitions:
         description: Nom de famille de l'utilisateur
       terms:
         type: boolean
-        description: Accord de l'utilisateur aux conditions de service
+        description: Acceptation des conditions d'utilisation
   SignUpResponse:
     type: object
     properties:
@@ -400,7 +388,7 @@ definitions:
         type: string
         description: Message concernant la réponse
       body:
-        $ref: "#/definitions/UserInfos"
+        $ref: "#/definitions/UserInfo"
   UserUpdatedRequest:
     type: object
     properties:
@@ -422,6 +410,17 @@ definitions:
       balance:
         type: number
         description: Solde actuel du compte
+  AccountResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Code de statut de la réponse
+      message:
+        type: string
+        description: Message concernant la réponse
+      body:
+        $ref: "#/definitions/Account"
   Transaction:
     type: object
     properties:
@@ -441,7 +440,7 @@ definitions:
       currency:
         type: string
         description: Devise de la transaction
-      type:
+      transaction_type:
         type: string
         description: Type de la transaction (par exemple, débit, crédit)
       category:
